@@ -1,0 +1,6 @@
+1. User needs a  car from location X.
+  in centre, there is one auto & one unassigned car & a driver.
+  one auto, one car with no driver.
+
+2.
+
