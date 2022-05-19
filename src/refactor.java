@@ -48,24 +48,21 @@ class CabSystem{
 
 class User{
 
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private int age;
-    private String userId;
+    private String userName;
     private char[] password;
 
 
-    public String getFirstName(){
-        return firstName;
+    public String getFullName(){
+        return fullName;
     }
-    public String getLastName(){
-        return lastName;
-    }
+   
     public int getAge(){
         return age;
     }
-    public String getUserId(){
-        return userId;
+    public String getUserName(){
+        return userName;
     }
 
     class Customer extends User{
