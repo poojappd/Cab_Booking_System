@@ -1,3 +1,5 @@
+import jdk.javadoc.doclet.Taglet;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +52,7 @@ class User{
     private String lastName;
     private int age;
     private String userId;
-    private char[]  password;
+    private char[] password;
 
 
     public String getFirstName(){
@@ -90,21 +92,33 @@ class Database{
     HashMap<String, User> allUsers;
     HashMap <String, char[]> userCredentials;
 
-    private getUser(String userName);
-    public verifyUser(String userName, char[] password);
+    private void getUser(String userName){}
+    public void verifyUser(String userName, char[] password){}
 
 
 
 }
 class Location{
+    Location(int xCoordinate, int yCoordinate, StationPoint stationPoint){
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
+        this.stationPoint = stationPoint;
+    }
     private int xCoordinate;
     private int yCoordinate;
     private StationPoint stationPoint;
 
-    public int getxCoordinate();
-    public int getyCoordinate();
-    public StationPoint getStationPoint();
+    public int getxCoordinate() {
+        return xCoordinate;
+    }
 
+    public int getyCoordinate() {
+        return yCoordinate;
+    }
+
+    public StationPoint getStationPoint() {
+        return stationPoint;
+    }
 }
 class Vehicle{
     private String vehicleId;
@@ -118,11 +132,39 @@ class Vehicle{
     private String plateNumber;
     private int maxOccupants;
 
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public String getVehicleName() {
+        return vehicleName;
+    }
+
     public VehicleType getVehicleType() {
         return vehicleType;
     }
 
-    public String getVehicleId();
+    public int getMileage() {
+        return mileage;
+    }
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public int getNumberOfWheels() {
+        return numberOfWheels;
+    }
+
+    public int getFuelLevel() {
+        return fuelLevel;
+    }
+
+    int setFuelLevel(){}
+
+    /*
+    public String getVehicleId(){
+    }
     public String getVehicleName();
     public String getOwnerId();
     public String getPlateNumber();
@@ -136,7 +178,7 @@ class Vehicle{
 
     public String getVehicleDriverId() {
         return vehicleDriverId;
-    }
+    }*/
 }
 
 class Car extends Vehicle{

@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class CabCentre {
     private StationPoint locatedStationPoint;
-    private HashMap<VehicleType, Vehicle> availableVehicles;
+    private HashMap<VehicleType, ArrayList<Vehicle>> availableVehicles;
     private HashMap<String, Driver> availableDrivers;
     private HashMap<VehicleType, ArrayList<Vehicle>> vehiclesWithNoDriverAssigned;
     private HashMap<VehicleType, ArrayList<Driver>> driverWithNoVehicleAssigned;
@@ -17,7 +17,7 @@ public class CabCentre {
     void addVehicleWithDriver(Vehicle newVehicle, Driver newDriver){
         //pre assigned driver with vehicle shud only be passed
         newVehicle.setVehicleDriverId(newDriver.getDriverId());
-        availableVehicles.put(newVehicle.getVehicleType(), newVehicle);
+        availableVehicles.get(newVehicle.getVehicleType()).add(newVehicle);
         availableDrivers.put(newDriver.getDriverId(), newDriver);
 
     }
