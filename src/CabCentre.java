@@ -8,6 +8,8 @@ public class CabCentre {
     private HashMap<VehicleType, ArrayList<Vehicle>> vehiclesWithNoDriverAssigned;
     private HashMap<VehicleType, ArrayList<Driver>> driverWithNoVehicleAssigned;
 
+    +
+
 
     CabCentre(StationPoint locatedStationPoint){
         this.locatedStationPoint = locatedStationPoint;

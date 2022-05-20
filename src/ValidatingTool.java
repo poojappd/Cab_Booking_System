@@ -35,14 +35,19 @@ public class ValidatingTool {
         return false;
     }
 
-    public static boolean validateNumberPlate(String numberPlate){
+    public static String validateNumberPlate(String numberPlate){
         boolean isNumberPlateValid = false;
         while (!isNumberPlateValid) {
             if (!numberPlate.matches("^[A-Za-z]{2}[0-9]{4}\\z")) {
                 System.out.println("Your Number plate is not valid! Please try again");
-
+                numberPlate = input.nextLine();
+            }
+            else{
+                isNumberPlateValid = true;
+                System.out.println("Vehicle numberplate validation is successfull");
             }
         }
+        return numberPlate;
     }
 
 }
