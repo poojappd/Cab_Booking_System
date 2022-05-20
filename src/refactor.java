@@ -1,12 +1,11 @@
-import jdk.javadoc.doclet.Taglet;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 enum StationPoint {
     PALLAVARAM,
     TAMBARAM,
     CHROMEPET,
+    NA
 }
 
 enum CabBookingStatus{
@@ -136,9 +135,12 @@ class Vehicle{
         return fuelLevel;
     }
 
-    int setFuelLevel(){}
+    void setFuelLevel(){}
 
-    /*
+    public String getVehicleDriverId() {
+        return vehicleDriverId;
+    }
+/*
     public String getVehicleId(){
     }
     public String getVehicleName();
@@ -165,8 +167,8 @@ class Car extends Vehicle{
     float addConvenienceFee();
     public CarType getCarType();
 }
-class Fare{
-    private String CustomerName;
+class Trip {
+    private String PassengerName;
     private String driverName;
     private LocalDateTime cabBookedTime;
     private LocalDateTime cabReachedTime;
@@ -175,7 +177,7 @@ class Fare{
     private CabBookingStatus cabBookingStatus;
 
 
-    public String getCustomerName();
+    public String getPassengerName();
     public String getDriverName();
     public LocalDateTime getCabBookedTime();
     public LocalDateTime getCabReachedTime();
