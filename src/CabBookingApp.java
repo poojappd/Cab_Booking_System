@@ -1,44 +1,112 @@
-
-import java.util.Scanner;
-
 public class CabBookingApp {//change name, common to all users
-    private static Scanner input;
-    private static String userStringInput;
-    private static boolean noAppReload = true;
 
     static void createUser(){
 
         System.out.println("Enter your age");
-        int age = input.nextInt();
-        input.nextLine();
-        noAppReload = Validation.validateUserAge(age);
-        if(noAppReload) {
+        int age = UserInputGetter.getIntInput();
+        boolean isOldEnough;
+        isOldEnough = ValidatingTool.validateUserAge(age);
+        if(isOldEnough) {
             System.out.println("Enter your full name");
-            String fullName = input.nextLine();
+            String fullName = UserInputGetter.getStringInput();
             System.out.println("Enter a new userName");
-            String name = input.nextLine();
+            String username = UserInputGetter.getStringInput();
             System.out.println("Enter a password");
-            String password = input.nextLine();
-            char[] encryptedPassword = EncryptDecrypt.encrypt(Validation.validatePassword(password));
+            String password = UserInputGetter.getStringInput();
+            char[] encryptedPassword = EncryptDecrypt.encrypt(ValidatingTool.validatePassword(password));
             //System.out.println(password);
             System.out.println("Choose your Home address area");
             int i =1;
-            for(StationPoint stationPoint:StationPoint.values()){
+            for(StationPoint stationPoint:StationPoint.values().){
                 System.out.println(i++ +". "+stationPoint);
             }
-            StationPoint homeAddress = StationPoint.NA;
-            switch (getMenuChoiceInput(3)){
+            StationPoint homeAddress = null;
+            switch (UserInputGetter.getMenuChoiceInput(3)){
                 case 1-> homeAddress = StationPoint.CHROMEPET;
                 case 2-> homeAddress = StationPoint.PALLAVARAM;
                 case 3-> homeAddress = StationPoint.TAMBARAM;
             };//3 for now, increase later
-            Passenger newPassenger = new Passenger(fullName,age,name,encryptedPassword,homeAddress);
-            UserApplicationScreen userScreen = new UserApplicationScreen(newPassenger);
-            userScreen.
+
+            Passenger newPassenger = new Passenger(fullName,age,username,encryptedPassword,homeAddress);
+            Database.addUser(newPassenger, encryptedPassword);
+
+            System.out.println("Account created successfuly! \n Please login to use the application!");
         }
 
     }
-    static void createEmployee(){}
+    static void createEmployee() {
+
+        System.out.println("Enter your age");
+        int age = UserInputGetter.getIntInput();
+        boolean isOldEnough;
+        isOldEnough = ValidatingTool.validateUserAge(age);
+        if (isOldEnough) {
+            System.out.println("Enter your full name");
+            String fullName = UserInputGetter.getStringInput();
+            System.out.println("Enter a new userName");
+            String username = UserInputGetter.getStringInput();
+            System.out.println("Enter a password");
+            String password = UserInputGetter.getStringInput();
+            char[] encryptedPassword = EncryptDecrypt.encrypt(ValidatingTool.validatePassword(password));
+            System.out.println("In which of these areas would you like to work at?\n");
+            int i = 1;
+            for (StationPoint stationPoint : StationPoint.values().) {
+                System.out.println(i++ + ". " + stationPoint);
+            }
+            System.out.println("Enter the option: ");
+            StationPoint defaultStationPoint = null;
+            switch (UserInputGetter.getMenuChoiceInput(3)) {
+                case 1 -> defaultStationPoint = StationPoint.CHROMEPET;
+                case 2 -> defaultStationPoint = StationPoint.PALLAVARAM;
+                case 3 -> defaultStationPoint = StationPoint.TAMBARAM;
+            }
+            ;
+            System.out.println("How many rides can you take in a single day?");
+            System.out.println("Enter a value between 5 to 30: ");
+            int rideCountPerDay = UserInputGetter.getInputFromRange(5, 30);
+            Driver newDriver = new Driver(fullName, age, username, encryptedPassword,
+                    defaultStationPoint, rideCountPerDay);
+            System.out.println("Do you have a vehicle for picking up customers?");
+            System.out.println("1.Yes\n2.No\n");
+            int hasVehicle = UserInputGetter.getMenuChoiceInput(2);
+            System.out.println("""
+                        Choose your suited vehicle type:\s
+                        1. Car
+                        2. Auto Rickshaw
+                        3. Bike""");
+            int chosenMenuOption = UserInputGetter.getMenuChoiceInput(3);
+
+            if(hasVehicle == 1){
+                System.out.println("Enter the details of your Vehicle:\n Vehicle Name: ");
+                String vehicleName = UserInputGetter.getStringInput();
+                System.out.println("Enter your vehicle's plate number\n" +
+                        "Note: Plate number should contain 2 letters followed by 4 numbers\n" +
+                        "eg. TN3453");
+                String plateNumber = UserInputGetter.getStringInput();
+                switch (chosenMenuOption){
+                    case 1 -> {
+
+                    }
+                    case 2 -> {
+
+                    }
+                    case 3 -> {
+
+                    }
+                }
+            }
+            else{
+                switch (chosenMenuOption){
+
+                }
+            }
+            Database.addUser(newDriver, encryptedPassword);
+
+            System.out.println("Account created successfuly! \n Please login to use the application!");
+
+
+        }
+    }
     static void chooseAccountForNewUser(){
 
         System.out.println("""
@@ -46,7 +114,7 @@ public class CabBookingApp {//change name, common to all users
                 1. User
                 2. Employee
                 """);
-        int chosenMenuOption = getMenuChoiceInput(2);
+        int chosenMenuOption = UserInputGetter.getMenuChoiceInput(2);
         switch (chosenMenuOption){
             case 1 -> createUser();
             case 2 -> createEmployee();
@@ -60,28 +128,11 @@ public class CabBookingApp {//change name, common to all users
                 2. Admin\s
                 3. Employee
                 \s""");
-        getMenuChoiceInput(3);
-    }
-
-    static int getMenuChoiceInput(int choiceLimit){
-        int chosenMenuOption = 0;
-        boolean noError = false;
-
-        do{
-            input = new Scanner(System.in);
-            try {
-                chosenMenuOption = input.nextInt();
-                if(chosenMenuOption<0 || chosenMenuOption>choiceLimit)
-                {throw new Exception();}
-                noError = true;
-            }
-            catch (Exception ie) {
-                System.out.println("Please enter a valid option");
-            }
-
-        }while (!noError);
-        input.nextLine();
-        return chosenMenuOption;
+        int chosenMenuOption = UserInputGetter.getMenuChoiceInput(3);
+        switch (chosenMenuOption){
+            case 1 -> userLogin();
+            case 2 -> employeeLogin();
+        }
     }
 
 
@@ -101,10 +152,9 @@ public class CabBookingApp {//change name, common to all users
 
     public static void main(String[] args) {
         int chosenMenuOption = 0;
-        while (chosenMenuOption != -1 && noAppReload == false) {
-            noAppReload = true;
+        while (chosenMenuOption != -1) {
             viewWelcomeScreen();
-            chosenMenuOption = getMenuChoiceInput(2);
+            chosenMenuOption = UserInputGetter.getMenuChoiceInput(2);
 
             if(chosenMenuOption == 1){
                 chooseAccountForNewUser();

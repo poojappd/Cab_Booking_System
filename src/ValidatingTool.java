@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Validation {
+public class ValidatingTool {
     static Scanner input = new Scanner(System.in);
     public static String validatePassword(String password) {
         boolean passwordIsNotValid = true;
@@ -29,10 +29,20 @@ public class Validation {
             }
         }
         else{
-            System.out.println("Sorry kid, you're not allowed to use this application");
+            System.out.println("Sorry kid, you're not allowed to enter into this application");
         }
 
         return false;
+    }
+
+    public static boolean validateNumberPlate(String numberPlate){
+        boolean isNumberPlateValid = false;
+        while (!isNumberPlateValid) {
+            if (!numberPlate.matches("^[A-Za-z]{2}[0-9]{4}\\z")) {
+                System.out.println("Your Number plate is not valid! Please try again");
+
+            }
+        }
     }
 
 }

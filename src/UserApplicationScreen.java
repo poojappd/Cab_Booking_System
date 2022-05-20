@@ -5,9 +5,23 @@ public class UserApplicationScreen {
         this.passenger = newPassenger;
 
     }
+    void bookCab(){
+        StationPoint fromLocation;
+        StationPoint toLocation;
+
+    }
+    void rentCab(){
+
+    }
+    void scheduleCab(){
+
+    }
+    void shareCab(){
+
+    }
 
 
-    public static void main(String[] args) {
+    public void openUserApplicationScreen(){
 
     }
 }

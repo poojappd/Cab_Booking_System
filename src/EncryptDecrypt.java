@@ -5,7 +5,7 @@ public class EncryptDecrypt {
         //return temp;
         return s.toCharArray();
     }
-    public static char[] decrypt(char @NotNull [] s){
+    public static char[] decrypt(char  [] s){
         char[] temp = new char[s.length];
         //return temp;
         return s;

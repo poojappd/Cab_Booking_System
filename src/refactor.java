@@ -4,8 +4,7 @@ import java.util.ArrayList;
 enum StationPoint {
     PALLAVARAM,
     TAMBARAM,
-    CHROMEPET,
-    NA
+    CHROMEPET
 }
 
 enum CabBookingStatus{
@@ -100,11 +99,10 @@ class Vehicle{
     private String vehicleName;
     private VehicleType vehicleType;
     private int mileage;
-    private int numberOfWheels;
     private String ownerId;//set only once
     private String vehicleDriverId;
     private int fuelLevel;
-    private String plateNumber;
+    private String NumberPlate;
     private int maxOccupants;
 
     public String getVehicleId() {
@@ -123,12 +121,8 @@ class Vehicle{
         return mileage;
     }
 
-    public String getPlateNumber() {
-        return plateNumber;
-    }
-
-    public int getNumberOfWheels() {
-        return numberOfWheels;
+    public String getNumberPlate() {
+        return NumberPlate;
     }
 
     public int getFuelLevel() {
@@ -140,19 +134,20 @@ class Vehicle{
     public String getVehicleDriverId() {
         return vehicleDriverId;
     }
+    public void setVehicleDriverId(String vehicleDriverId) {
+        this.vehicleDriverId = vehicleDriverId;
+    }
 /*
     public String getVehicleId(){
     }
     public String getVehicleName();
     public String getOwnerId();
-    public String getPlateNumber();
+    public String getNumberPlate();
     public int getNumberOfWheels();
     public int getMileage();
     public int getFuelLevel();
 
-    public void setVehicleDriverId(String vehicleDriverId) {
-        this.vehicleDriverId = vehicleDriverId;
-    }
+
 
     public String getVehicleDriverId() {
         return vehicleDriverId;
@@ -163,7 +158,7 @@ class Car extends Vehicle{
     private CarType carType;
     private boolean airConditionerPresent;
     private boolean wifiPresent;
-
+    private int numberOfWheels;//WHYYY???
     float addConvenienceFee();
     public CarType getCarType();
 }

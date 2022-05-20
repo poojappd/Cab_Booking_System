@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class CabCentre {
     private StationPoint locatedStationPoint;
-    private HashMap<VehicleType, ArrayList<Vehicle>> availableVehicles;
+    private HashMap<VehicleType, ArrayList<Vehicle>> allAvailableVehicles;
     private HashMap<String, Driver> availableDrivers;
     private HashMap<VehicleType, ArrayList<Vehicle>> vehiclesWithNoDriverAssigned;
     private HashMap<VehicleType, ArrayList<Driver>> driverWithNoVehicleAssigned;
@@ -17,7 +17,7 @@ public class CabCentre {
     void addVehicleWithDriver(Vehicle newVehicle, Driver newDriver){
         //pre assigned driver with vehicle shud only be passed
         newVehicle.setVehicleDriverId(newDriver.getDriverId());
-        availableVehicles.get(newVehicle.getVehicleType()).add(newVehicle);
+        allAvailableVehicles.get(newVehicle.getVehicleType()).add(newVehicle);
         availableDrivers.put(newDriver.getDriverId(), newDriver);
 
     }
@@ -48,9 +48,9 @@ public class CabCentre {
 
     void setCabCentre(){
 
-        availableVehicles.put(VehicleType.CAR, new ArrayList<>());
-        availableVehicles.put(VehicleType.AUTO_RICKSHAW, new ArrayList<>());
-        availableVehicles.put(VehicleType.BIKE, new ArrayList<>());
+        allAvailableVehicles.put(VehicleType.CAR, new ArrayList<>());
+        allAvailableVehicles.put(VehicleType.AUTO_RICKSHAW, new ArrayList<>());
+        allAvailableVehicles.put(VehicleType.BIKE, new ArrayList<>());
         vehiclesWithNoDriverAssigned.put(VehicleType.CAR, new ArrayList<>());
         vehiclesWithNoDriverAssigned.put(VehicleType.AUTO_RICKSHAW, new ArrayList<>());
         vehiclesWithNoDriverAssigned.put(VehicleType.BIKE, new ArrayList<>());
