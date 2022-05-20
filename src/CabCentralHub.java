@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class CabCentralHub {
 
-    HashMap<StationPoint, CabCentre> allCabCentres;
+    private HashMap<StationPoint, CabCentre> allCabCentres;
 
     CabCentralHub(){
         allCabCentres = new HashMap<>();

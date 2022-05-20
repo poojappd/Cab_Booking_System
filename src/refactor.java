@@ -53,6 +53,12 @@ class User{
     private String userName;
     private char[] password;
 
+    User(String fullName, int age, String userName, char[] password){
+        this.age = age;
+        this.fullName = fullName;
+        this.password = password;
+        this.userName = userName;
+    }
 
     public String getFullName(){
         return fullName;
@@ -65,36 +71,9 @@ class User{
         return userName;
     }
 
-    class Customer extends User{
-        String userAddress;
-        private StationPoint currentStationPoint;
-        ArrayList <Fare> bookingHistory;
-
-        public String getUserAddress(){
-            return userAddress;
-        }
-
-        public StationPoint getCurrentStationPoint() {
-            return currentStationPoint;
-        }
-
-        ArrayList<Fare> getBookingHistory() {
-            return bookingHistory;
-        }
-
-    }
+   
 }
 
-class Database{
-    HashMap<String, User> allUsers;
-    HashMap <String, char[]> userCredentials;
-
-    private void getUser(String userName){}
-    public void verifyUser(String userName, char[] password){}
-
-
-
-}
 class Location{
     Location(int xCoordinate, int yCoordinate, StationPoint stationPoint){
         this.xCoordinate = xCoordinate;
