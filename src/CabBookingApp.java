@@ -17,21 +17,19 @@ public class CabBookingApp {//change name, common to all users
             //System.out.println(password);
             System.out.println("Choose your Home address area");
             int i =1;
-            for(StationPoint stationPoint:StationPoint.values().){
+            for(StationPoint stationPoint:StationPoint.values()){
                 System.out.println(i++ +". "+stationPoint);
             }
-            StationPoint homeAddress = null;
-            switch (UserInputGetter.getMenuChoiceInput(3)){
-                case 1-> homeAddress = StationPoint.CHROMEPET;
-                case 2-> homeAddress = StationPoint.PALLAVARAM;
-                case 3-> homeAddress = StationPoint.TAMBARAM;
-            };//3 for now, increase later
+            Location homeAddress = StationPoint.values()[UserInputGetter.getMenuChoiceInput(i-1)];
+            
+           
 
             Passenger newPassenger = new Passenger(fullName,age,username,encryptedPassword,homeAddress);
             Database.addUser(newPassenger, encryptedPassword);
 
             System.out.println("Account created successfuly! \n Please login to use the application!");
         }
+
 
     }
     static void createEmployee() {
@@ -50,17 +48,12 @@ public class CabBookingApp {//change name, common to all users
             char[] encryptedPassword = EncryptDecrypt.encrypt(ValidatingTool.validatePassword(password));
             System.out.println("In which of these areas would you like to work at?\n");
             int i = 1;
-            for (StationPoint stationPoint : StationPoint.values().) {
+            for (StationPoint stationPoint : StationPoint.values()) {
                 System.out.println(i++ + ". " + stationPoint);
             }
+
             System.out.println("Enter the option: ");
-            StationPoint defaultStationPoint = null;
-            switch (UserInputGetter.getMenuChoiceInput(3)) {
-                case 1 -> defaultStationPoint = StationPoint.CHROMEPET;
-                case 2 -> defaultStationPoint = StationPoint.PALLAVARAM;
-                case 3 -> defaultStationPoint = StationPoint.TAMBARAM;
-            }
-            ;
+            StationPoint defaultStationPoint  = StationPoint.values()[UserInputGetter.getMenuChoiceInput(i-1)];
             System.out.println("How many rides can you take in a single day?");
             System.out.println("Enter a value between 5 to 30: ");
             int rideCountPerDay = UserInputGetter.getInputFromRange(5, 30);
@@ -82,16 +75,19 @@ public class CabBookingApp {//change name, common to all users
                 System.out.println("Enter your vehicle's plate number\n" +
                         "Note: Plate number should contain 2 letters followed by 4 numbers\n" +
                         "eg. TN3453");
-                String plateNumber = UserInputGetter.getStringInput();
+                String plateNumber = ValidatingTool.validateNumberPlate(UserInputGetter.getStringInput());
                 switch (chosenMenuOption){
                     case 1 -> {
-
+                        VehicleType driverVehicleType = VehicleType.CAR;
+                        Car driverCar;
                     }
                     case 2 -> {
-
+                        VehicleType driverVehicleType = VehicleType.AUTO_RICKSHAW;
+                        AutoRickshaw driveAutoRickshaw;
                     }
                     case 3 -> {
-
+                        VehicleType driverVehicleType = VehicleType.BIKE;
+                        Bike driverBike;
                     }
                 }
             }
@@ -162,5 +158,9 @@ public class CabBookingApp {//change name, common to all users
             else if(chosenMenuOption == 2)
                 chooseAccountForExistingUser();
         }
+    }
+
+    static initializer(){
+
     }
 }

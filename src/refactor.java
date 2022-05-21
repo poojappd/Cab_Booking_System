@@ -2,9 +2,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 enum StationPoint {
-    PALLAVARAM,
-    TAMBARAM,
-    CHROMEPET
+    THAILAVARAM, 
+    GUDUVANCHERY, 
+    VANDALUR, 
+    TAMBARAM, 
+    SANITORIUM, 
+    CHROMEPET, 
+    PALLAVARAM, 
+    PAMMAL,
+    PERUNGALATHUR, 
+    URAPPAKKAM,
+    TIRUSULAM, 
+    MEENAMBAKKAM, 
+    ALANDUR, 
+    GUINDY,
 }
 
 enum CabBookingStatus{
@@ -71,27 +82,31 @@ class User{
 
    
 }
-
 class Location{
-    Location(int xCoordinate, int yCoordinate, StationPoint stationPoint){
+    Location(float xCoordinate, float yCoordinate, StationPoint stationPoint, String area){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.stationPoint = stationPoint;
+        this.area = area;
     }
-    private int xCoordinate;
-    private int yCoordinate;
+    private float xCoordinate;
+    private float yCoordinate;
     private StationPoint stationPoint;
+    private String area;
 
-    public int getxCoordinate() {
+    public float getxCoordinate() {
         return xCoordinate;
     }
 
-    public int getyCoordinate() {
+    public float getyCoordinate() {
         return yCoordinate;
     }
 
     public StationPoint getStationPoint() {
         return stationPoint;
+    }
+    public String getArea(){
+        return area;
     }
 }
 class Vehicle{
