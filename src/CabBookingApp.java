@@ -15,18 +15,16 @@ public class CabBookingApp {//change name, common to all users
             String password = UserInputGetter.getStringInput();
             char[] encryptedPassword = EncryptDecrypt.encrypt(ValidatingTool.validatePassword(password));
             //System.out.println(password);
-            System.out.println("Choose your Home address area");
-            int i =1;
-            for(StationPoint stationPoint:StationPoint.values()){
-                System.out.println(i++ +". "+stationPoint);
-            }
-            Location homeAddress = StationPoint.values()[UserInputGetter.getMenuChoiceInput(i-1)];
-            
-           
+            System.out.println("Choose your Home address base location");
+            Map.viewBaseLocations();
+            StationPoint homeStation = StationPoint.values()[UserInputGetter.getMenuChoiceInput(Map.getBaseLocationCount())];
+            Map.viewLocationFromBaseLocation(homeStation);
+            System.out.println("Now pick your locality");
+            int choice = UserInputGetter.getMenuChoiceInput(Map.getAreaCount(homeStation));
+            Location homeLocation = Map.getLocationFromOption(homeStation, choice);
 
-            Passenger newPassenger = new Passenger(fullName,age,username,encryptedPassword,homeAddress);
+            Passenger newPassenger = new Passenger(fullName,age,username,encryptedPassword, homeLocation);
             Database.addUser(newPassenger, encryptedPassword);
-
             System.out.println("Account created successfuly! \n Please login to use the application!");
         }
 
@@ -67,7 +65,7 @@ public class CabBookingApp {//change name, common to all users
                         1. Car
                         2. Auto Rickshaw
                         3. Bike""");
-            int chosenMenuOption = UserInputGetter.getMenuChoiceInput(3);
+            int vehicleTypeOption = UserInputGetter.getMenuChoiceInput(3);
 
             if(hasVehicle == 1){
                 System.out.println("Enter the details of your Vehicle:\n Vehicle Name: ");
@@ -76,10 +74,31 @@ public class CabBookingApp {//change name, common to all users
                         "Note: Plate number should contain 2 letters followed by 4 numbers\n" +
                         "eg. TN3453");
                 String plateNumber = ValidatingTool.validateNumberPlate(UserInputGetter.getStringInput());
-                switch (chosenMenuOption){
+                switch (vehicleTypeOption){
                     case 1 -> {
                         VehicleType driverVehicleType = VehicleType.CAR;
-                        Car driverCar;
+                        System.out.println("Enter the number of seats in your car\nNote: valid values are from 4 to 6" +
+                                "excluding driver seat");
+                        int numberOfSeats = UserInputGetter.getInputFromRange(4,6);
+                        System.out.println("Does the air conditioner work in your car?\n1.Yes\n2.No");
+                        int option = UserInputGetter.getMenuChoiceInput(2);
+                        boolean airConditionerPresent;
+                        if(option == 1){
+                            airConditionerPresent = true;
+                        }
+                        else {
+                            airConditionerPresent = false;
+                        }
+                        CarType carType;
+                        if(numberOfSeats == 4){
+                            carType = CarType.SEDAN;
+                        }
+                        else {
+                            carType = CarType.SUV;
+                        }
+                        Car driverCar = new Car(vehicleName, plateNumber, numberOfSeats, numberOfSeats, airConditionerPresent,carType);
+
+
                     }
                     case 2 -> {
                         VehicleType driverVehicleType = VehicleType.AUTO_RICKSHAW;
@@ -92,7 +111,7 @@ public class CabBookingApp {//change name, common to all users
                 }
             }
             else{
-                switch (chosenMenuOption){
+                switch (vehicleTypeOption){
 
                 }
             }
@@ -160,7 +179,7 @@ public class CabBookingApp {//change name, common to all users
         }
     }
 
-    static initializer(){
+    static void initializer(){
 
     }
 }

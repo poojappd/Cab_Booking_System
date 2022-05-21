@@ -117,9 +117,18 @@ class Vehicle{
     private String ownerId;//set only once
     private String vehicleDriverId;
     private int fuelLevel;
-    private String NumberPlate;
+    private int numberOfSeats;
+    private String numberPlate;
     private int maxOccupants;
 
+    Vehicle(String vehicleName, VehicleType vehicleType, String numberPlate, int numberOfSeats, int maxOccupants){
+        this.vehicleDriverId;
+        this.vehicleName = vehicleName;
+        this.vehicleType = vehicleType;
+        this.numberPlate = numberPlate;
+        this.maxOccupants = maxOccupants;
+        this.numberOfSeats = numberOfSeats;
+    }
     public String getVehicleId() {
         return vehicleId;
     }
@@ -137,7 +146,7 @@ class Vehicle{
     }
 
     public String getNumberPlate() {
-        return NumberPlate;
+        return numberPlate;
     }
 
     public int getFuelLevel() {
@@ -173,7 +182,20 @@ class Car extends Vehicle{
     private CarType carType;
     private boolean airConditionerPresent;
     private boolean wifiPresent;
-    private int numberOfWheels;//WHYYY???
+    private int numberOfSeats;
+
+    Car(String vehicleName, String numberPlate, int numberOfSeats, int maxOccupants,
+        boolean airConditionerPresent, CarType carType){
+        super(vehicleName, VehicleType.CAR, numberPlate, numberOfSeats, numberOfSeats);
+        this.airConditionerPresent = airConditionerPresent;
+        this.carType = carType;
+
+
+    }
+
+    void setWifi(){
+        this.wifiPresent = true;
+    }
     float addConvenienceFee();
     public CarType getCarType();
 }
@@ -200,9 +222,13 @@ class FareCalculator{
 }
 class Bike extends Vehicle{
     private final int maxOccupants = 1;
+    private final int numberOfSeats = 1;
     private final float timeDurationReductionRate = 0.15f;
     private final float BikeRate = 0.25f;
 
+    Bike(String vehicleName, String numberPlate){
+        super(vehicleName, VehicleType.AUTO_RICKSHAW, numberPlate, 1, 1);
+    }
     public int getMaxOccupants() {
         return maxOccupants;
     }
@@ -215,8 +241,24 @@ class Bike extends Vehicle{
         return BikeRate;
     }
 }
-class AutoRickshaw extends Vehicle{
 
+
+class AutoRickshaw extends Vehicle{
+    private final int maxOccupants = 3;
+    private final int numberOfSeats = 3;
+    private int waitingCharges;
+    private float autoRickshawPriceRate = 0.12f;
+    AutoRickshaw(String vehicleName, String numberPlate){
+        super(vehicleName, VehicleType.AUTO_RICKSHAW, numberPlate, 3, 3);
+    }
+
+    void putWaitingCharges(int minutes){
+
+    }
+
+    public float getAutoRickshawPriceRate() {
+        return autoRickshawPriceRate;
+    }
 }
 
 

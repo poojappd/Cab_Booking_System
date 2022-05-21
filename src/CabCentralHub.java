@@ -2,14 +2,21 @@ import java.util.HashMap;
 
 public class CabCentralHub {
 
-    private HashMap<StationPoint, CabCentre> allCabCentres;
+    private static HashMap<StationPoint, CabCentre> allCabCentres;
 
     CabCentralHub(){
         allCabCentres = new HashMap<>();
     }
-    void createCabCentre(StationPoint stationPoint){
+    static void addCabCentre(CabCentre cabCentre, StationPoint stationPoint){
         allCabCentres.put(stationPoint, new CabCentre(stationPoint));
     }
 
-    void addToCabCentre(){}
+    static void  addToCabCentre(Vehicle vehicle){}
+    void addToCabCentre(Driver driver, StationPoint driverStationPoint){
+
+    }
+    static void addToCabCentre(Driver driver, Vehicle vehicle, StationPoint driverStationPoint){
+
+    }
+
 }
