@@ -1,6 +1,23 @@
+package Main;
+
+import App.*;
+
 public class CabBookingApp {//change name, common to all users
 
-    static void createUser(){
+    private static String createUserName(){
+        boolean userNameExists = true;
+        String username = "";
+        while (userNameExists) {
+            System.out.println("Enter a new userName");
+            username = UserInputGetter.getStringInput();
+            userNameExists = Database.checkUserNameExists(username);
+            if(userNameExists){
+                System.out.println("Username already exists! please enter a new username");
+            }
+        }
+        return username;
+    }
+    static void createPassengerAccount(){
 
         System.out.println("Enter your age");
         int age = UserInputGetter.getIntInput();
@@ -9,15 +26,14 @@ public class CabBookingApp {//change name, common to all users
         if(isOldEnough) {
             System.out.println("Enter your full name");
             String fullName = UserInputGetter.getStringInput();
-            System.out.println("Enter a new userName");
-            String username = UserInputGetter.getStringInput();
+            String username = createUserName();
             System.out.println("Enter a password");
             String password = UserInputGetter.getStringInput();
             char[] encryptedPassword = EncryptDecrypt.encrypt(ValidatingTool.validatePassword(password));
             //System.out.println(password);
             System.out.println("Choose your Home address base location");
             Map.viewBaseLocations();
-            StationPoint homeStation = StationPoint.values()[UserInputGetter.getMenuChoiceInput(Map.getBaseLocationCount())];
+            StationPoint homeStation = StationPoint.values()[UserInputGetter.getMenuChoiceInput(Map.getBaseLocationCount()) - 1];
             Map.viewLocationFromBaseLocation(homeStation);
             System.out.println("Now pick your locality");
             int choice = UserInputGetter.getMenuChoiceInput(Map.getAreaCount(homeStation));
@@ -30,7 +46,7 @@ public class CabBookingApp {//change name, common to all users
 
 
     }
-    static void createEmployee() {
+    static void createEmployeeAccount() {
 
         System.out.println("Enter your age");
         int age = UserInputGetter.getIntInput();
@@ -40,7 +56,7 @@ public class CabBookingApp {//change name, common to all users
             System.out.println("Enter your full name");
             String fullName = UserInputGetter.getStringInput();
             System.out.println("Enter a new userName");
-            String username = UserInputGetter.getStringInput();
+            String username = createUserName();
             System.out.println("Enter a password");
             String password = UserInputGetter.getStringInput();
             char[] encryptedPassword = EncryptDecrypt.encrypt(ValidatingTool.validatePassword(password));
@@ -125,6 +141,20 @@ public class CabBookingApp {//change name, common to all users
 
         }
     }
+
+    static void passengerLogin(){
+        System.out.println("Enter your username");
+        String userName = UserInputGetter.getStringInput();
+        char [] password = UserInputGetter.getStringInput().toCharArray();
+        User user = Database.verifyUser(userName, password);
+        if(user == null){
+            System.out.println("Incorrect password! Please re-enter your account credentials");
+            passengerLogin();
+        }
+        else {
+            System.out.println("Welcome "+userName+" !");
+        }
+    }
     static void chooseAccountForNewUser(){
 
         System.out.println("""
@@ -134,8 +164,8 @@ public class CabBookingApp {//change name, common to all users
                 """);
         int chosenMenuOption = UserInputGetter.getMenuChoiceInput(2);
         switch (chosenMenuOption){
-            case 1 -> createUser();
-            case 2 -> createEmployee();
+            case 1 -> createPassengerAccount();
+            case 2 -> createEmployeeAccount();
         }
     }
 
@@ -147,10 +177,10 @@ public class CabBookingApp {//change name, common to all users
                 3. Employee
                 \s""");
         int chosenMenuOption = UserInputGetter.getMenuChoiceInput(3);
-        /*switch (chosenMenuOption){
-            case 1 -> userLogin();
-            case 2 -> employeeLogin();
-        }*/
+        switch (chosenMenuOption){
+            case 1 -> passengerLogin();
+            //case 2 -> employeeLogin();
+        }
     }
 
 

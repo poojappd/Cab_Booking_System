@@ -1,14 +1,16 @@
+package App;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Admin {
-    private static String adminPassword = "Admin@123";
+    private static final String adminPassword = "Admin@123";
     private static Admin onlyAdmin;
     private Admin(){}
 
     public static Admin instantiateOnce(String checkAdminPassword){
-        if(checkAdminPassword.equals(checkAdminPassword)){
+        if(checkAdminPassword.equals(adminPassword)){
             if (onlyAdmin == null){
                 onlyAdmin = new Admin();
             }
@@ -17,7 +19,7 @@ public class Admin {
         return null;
 
     }
-    void createMap(){
+    public void createMap(){
         String linesInCSV;
         String splitBy = ",";
         try {
@@ -32,7 +34,7 @@ public class Admin {
                 double xCoordinate = Double.parseDouble(CsvValues[2]);
                 double yCoordinate = Double.parseDouble(CsvValues[3]);
                 Location location = new Location(xCoordinate, yCoordinate, stationPoint, area);
-                Map.addToMap(location);
+                Map.addToMap(this, location);
 
 
             }
@@ -42,7 +44,7 @@ public class Admin {
             e.printStackTrace();
         }
     }
-    void initializeCabCentralHub(){
+    public void initializeCabCentralHub(){
         CabCentre cabCentre1 = new CabCentre(StationPoint.ALANDUR);
         Driver newDriver1 = new Driver("Perumal", 35, "peru","peru@35Cabs".toCharArray(), StationPoint.ALANDUR, 5, IdGenerator.generateDriverId(StationPoint.ALANDUR));
         Car vehicle1 = new Car("Maruti Swift", "tn4567", 4, 4, true,CarType.SEDAN);

@@ -1,3 +1,5 @@
+package App;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,7 +14,7 @@ class CabCentre {
 
 
     StationPoint getLocatedStationPoint(){
-
+        return locatedStationPoint;
     }
     CabCentre(StationPoint locatedStationPoint){
         this.locatedStationPoint = locatedStationPoint;
@@ -62,11 +64,17 @@ class CabCentre {
 
     }
 
+    private Driver getDriverFromId(String driverId){
+        return availableDrivers.get(driverId);
+    }
     HashMap<VehicleType, ArrayList<VehicleInfo>> getAvailableVehicleInfo(){
 
        return activeVehiclesInfo;
     }
-    void arrangeTrip(){
+    void arrangeRide(String driverId, String passengerName, Location passengerFromLocation,
+                     Location passengerToLocation, int tripOtp ){
+        Driver assignDriver = getDriverFromId(driverId);
+        assignDriver.pickupCustomer(passengerFromLocation, passengerToLocation, tripOtp);
 
     }
     private void setCabCentre(){

@@ -1,4 +1,4 @@
-
+package App;
 
 class FareCalculator{
     private static final double miniRatePerKm = 16.15;

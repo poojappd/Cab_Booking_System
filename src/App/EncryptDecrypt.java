@@ -1,3 +1,5 @@
+package App;
+
 public class EncryptDecrypt {
     public static char[] encrypt(String s) {
         //return char[] array of encrypted password

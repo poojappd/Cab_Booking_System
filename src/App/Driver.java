@@ -1,3 +1,5 @@
+package App;
+
 public class Driver extends User{
     private String driverId;
     private int rideLimitPerDay;
@@ -9,7 +11,7 @@ public class Driver extends User{
     StationPoint currentStationPoint;
     private boolean isActive;
 
-    Driver(String fullName, int age, String userName, char[] password,
+    public Driver(String fullName, int age, String userName, char[] password,
            StationPoint defaultStationPoint, int rideLimitPerDay, String driverId){
         super(fullName, age, userName, password);
         this.rideLimitPerDay = rideLimitPerDay;
