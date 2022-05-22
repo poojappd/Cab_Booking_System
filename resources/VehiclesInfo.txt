@@ -1,0 +1,37 @@
+Base fare for 1st 5 km = 120;
+120/5 = 24;
+
+*Mini:
+    3 seats;
+    Tata Indica, Nissan Micra, Maruti Ritz;
+    Budget friendly;
+    Rate per km 14.96;
+    Base fare for 52.8 for x km?
+
+* Prime Sedan
+    4 seats;
+    extra luggage;
+    Maruti Swifrt dzire. Toyota etios, Nissan Sunny;
+    Base fare - 57.4;
+    Rate per km = 16.81;
+    waiting fee per min = 3;
+
+*Prime SUV
+    5 - 6 seats
+    extra luggage,
+    Toyota Innova, Chevrolet Enjoy, Maruti Ertiga
+    Base fare  65.7;
+    Rate per km = 20;
+______________________________________________________________
+* Bike
+    1 seat,
+    Honda Activa, Hero splendor, Bajaj Avendor etc.
+    Rate per km = 3.4;
+    Base fare 17;
+
+______________________________________________________________
+* Auto
+3 seats,
+Bajaj - RE,
+Rate per km - 12.6
+Base fare - 26.25;

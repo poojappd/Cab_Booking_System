@@ -49,7 +49,7 @@ class Map {
     }
 
     static Location getLocationFromOption(StationPoint baseStation, int index){
-        return locationsUnderBaseStations.get(baseStation).get(index);
+        return locationsUnderBaseStations.get(baseStation).get(index-1);
     }
 }
 

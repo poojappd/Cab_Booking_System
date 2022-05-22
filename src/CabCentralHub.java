@@ -1,13 +1,13 @@
 import java.util.HashMap;
 
-public class CabCentralHub {
+public class CabCentralHub {//admin
 
     private static HashMap<StationPoint, CabCentre> allCabCentres;
 
     CabCentralHub(){
         allCabCentres = new HashMap<>();
     }
-    static void addCabCentre(CabCentre cabCentre, StationPoint stationPoint){
+    static void addCabCentre(Admin admin, CabCentre cabCentre, StationPoint stationPoint){
         allCabCentres.put(stationPoint, new CabCentre(stationPoint));
     }
 
@@ -17,6 +17,16 @@ public class CabCentralHub {
     }
     static void addToCabCentre(Driver driver, Vehicle vehicle, StationPoint driverStationPoint){
 
+    }
+
+    static void getAvailableVehiclesFromStation(StationPoint stationPoint){
+       CabCentre chosenCabCentre = allCabCentres.get(stationPoint);
+       chosenCabCentre.
+    }
+    static void arrangeTrip(String passengerName, Location passengerFromLocation,
+                            Location passengerToLocation, int tripOtp){
+        CabCentre chosenCabCentre = allCabCentres.get(passengerFromLocation.getStationPoint());
+        chosenCabCentre.
     }
 
 }

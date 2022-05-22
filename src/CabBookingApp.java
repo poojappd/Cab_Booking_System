@@ -55,8 +55,9 @@ public class CabBookingApp {//change name, common to all users
             System.out.println("How many rides can you take in a single day?");
             System.out.println("Enter a value between 5 to 30: ");
             int rideCountPerDay = UserInputGetter.getInputFromRange(5, 30);
+            String driverId = IdGenerator.generateDriverId(defaultStationPoint);
             Driver newDriver = new Driver(fullName, age, username, encryptedPassword,
-                    defaultStationPoint, rideCountPerDay);
+                    defaultStationPoint, rideCountPerDay, driverId);
             System.out.println("Do you have a vehicle for picking up customers?");
             System.out.println("1.Yes\n2.No\n");
             int hasVehicle = UserInputGetter.getMenuChoiceInput(2);
@@ -77,7 +78,7 @@ public class CabBookingApp {//change name, common to all users
                 switch (vehicleTypeOption){
                     case 1 -> {
                         VehicleType driverVehicleType = VehicleType.CAR;
-                        System.out.println("Enter the number of seats in your car\nNote: valid values are from 4 to 6" +
+                        System.out.println("Enter the number of seats in your car\nNote: valid values are from 3 to 6" +
                                 "excluding driver seat");
                         int numberOfSeats = UserInputGetter.getInputFromRange(4,6);
                         System.out.println("Does the air conditioner work in your car?\n1.Yes\n2.No");
@@ -90,23 +91,30 @@ public class CabBookingApp {//change name, common to all users
                             airConditionerPresent = false;
                         }
                         CarType carType;
-                        if(numberOfSeats == 4){
+                        if(numberOfSeats ==3){
+                            carType = CarType.MINI;
+                        }
+                        else if(numberOfSeats == 4){
                             carType = CarType.SEDAN;
                         }
                         else {
                             carType = CarType.SUV;
                         }
                         Car driverCar = new Car(vehicleName, plateNumber, numberOfSeats, numberOfSeats, airConditionerPresent,carType);
+                        driverCar.setVehicleDriverId(driverId);
+                        newDriver.setAssociatedVehicle(driverCar);
 
 
                     }
                     case 2 -> {
                         VehicleType driverVehicleType = VehicleType.AUTO_RICKSHAW;
-                        AutoRickshaw driveAutoRickshaw;
+                        AutoRickshaw driveAutoRickshaw = new AutoRickshaw(vehicleName, plateNumber);
+                        driveAutoRickshaw.setVehicleDriverId(driverId);
                     }
                     case 3 -> {
                         VehicleType driverVehicleType = VehicleType.BIKE;
-                        Bike driverBike;
+                        Bike newBike = new Bike(vehicleName, plateNumber);
+                        newDriver.setAssociatedVehicle(newBike);
                     }
                 }
             }

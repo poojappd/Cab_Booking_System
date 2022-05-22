@@ -17,6 +17,5 @@ not all drivers can join same location, put drivers in demading locations.
 
 why no. of wheels in vehicle and car??whyyyyyyy
 
-unique username, driver feedback; enjoy primeplay on the ride stuff;
 
-HashSet is universal and fast, treeset is ordered,LinkedHashset keeps insertion order..
+

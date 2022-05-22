@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CabCentre {
+class CabCentre {
     private StationPoint locatedStationPoint;
     private HashMap<VehicleType, ArrayList<Vehicle>> allAvailableVehicles;
     private HashMap<String, Driver> availableDrivers;
+    private
     private HashMap<VehicleType, ArrayList<Vehicle>> vehiclesWithNoDriverAssigned;
     private HashMap<VehicleType, ArrayList<Driver>> driverWithNoVehicleAssigned;
 
@@ -47,7 +48,18 @@ public class CabCentre {
 
     }
 
-    void setCabCentre(){
+    void getAvailableVehicles(CabCentralHub centralHub){
+        ArrayList<Vehicle> activeVehicles = new ArrayList<>();
+        for(Driver driver:availableDrivers.values()){
+            if(driver.getActiveStatus()){
+                activeDrivers.add(driver);
+            }
+        }
+    }
+    void arrangeTrip(){
+
+    }
+    private void setCabCentre(){
 
         allAvailableVehicles.put(VehicleType.CAR, new ArrayList<>());
         allAvailableVehicles.put(VehicleType.AUTO_RICKSHAW, new ArrayList<>());

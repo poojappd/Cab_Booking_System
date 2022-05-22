@@ -41,7 +41,8 @@ enum VehicleType {
 enum CarType{
     PRIME,
     SEDAN,
-    SUV
+    SUV,
+    MINI
 
 }
 
@@ -114,7 +115,7 @@ class Vehicle{
     private String vehicleName;
     private VehicleType vehicleType;
     private int mileage;
-    private String ownerId;//set only once
+    private String ownerId;
     private String vehicleDriverId;
     private int fuelLevel;
     private int numberOfSeats;
@@ -122,7 +123,6 @@ class Vehicle{
     private int maxOccupants;
 
     Vehicle(String vehicleName, VehicleType vehicleType, String numberPlate, int numberOfSeats, int maxOccupants){
-        this.vehicleDriverId;
         this.vehicleName = vehicleName;
         this.vehicleType = vehicleType;
         this.numberPlate = numberPlate;

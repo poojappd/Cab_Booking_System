@@ -7,12 +7,14 @@ public class Driver extends User{
     private Vehicle associatedVehicle;
     StationPoint defaultStationPoint;
     StationPoint currentStationPoint;
+    private boolean isActive;
 
     Driver(String fullName, int age, String userName, char[] password,
-           StationPoint defaultStationPoint, int rideLimitPerDay){
+           StationPoint defaultStationPoint, int rideLimitPerDay, String driverId){
         super(fullName, age, userName, password);
         this.rideLimitPerDay = rideLimitPerDay;
         this.defaultStationPoint = defaultStationPoint;
+        this.driverId = driverId;
 
     }
 
@@ -61,8 +63,14 @@ public class Driver extends User{
                 associatedVehicle.getNumberPlate()   );
     }
 
-    public void pickupCustomer(Location fromLocation, Location toLocation){
+    public void pickupCustomer(Location fromLocation, Location toLocation, int tripOtp){
 
     }
 
+    void setActiveStatus(CabCentralHub centralHub, boolean isActive){
+        this.isActive = isActive;
+    }
+    boolean getActiveStatus(){
+        return isActive;
+    }
 }
