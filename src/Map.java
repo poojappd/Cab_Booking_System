@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 
 class Map {
@@ -51,5 +52,33 @@ class Map {
     static Location getLocationFromOption(StationPoint baseStation, int index){
         return locationsUnderBaseStations.get(baseStation).get(index-1);
     }
+
+    static double calculateDistance(Location fromLocation, Location toLocation){
+        double x1Coordinate = fromLocation.getxCoordinate();
+        double y1Coordinate = fromLocation.getyCoordinate();
+        double x2Coordinate = toLocation.getxCoordinate();
+        double y2Coordinate = toLocation.getyCoordinate();
+
+        double distance = Math.sqrt((Math.pow((x2Coordinate - x1Coordinate),2))
+                + (Math.pow((y2Coordinate - y1Coordinate),2))) * 100;
+
+        return distance;
+
+    }
+    static StationPoint getNearestStationPoint(StationPoint fromStationPoint, Set<StationPoint> stationPointSet){
+        double minDistance = Double.MAX_VALUE;
+        StationPoint nearestStationPoint = fromStationPoint;
+        for (StationPoint checkPoint: stationPointSet){
+            Location source = getLocationFromOption(fromStationPoint,1);
+            Location destination = getLocationFromOption(checkPoint, 1);
+            double currentDistance =  calculateDistance(source, destination);
+            if(minDistance > currentDistance){
+                minDistance = currentDistance;
+                nearestStationPoint = destination.getStationPoint();
+            }
+
+        }
+        return nearestStationPoint;
+    };
 }
 

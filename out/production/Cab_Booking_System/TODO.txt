@@ -2,7 +2,7 @@ Ola Prime Play
 Location x, y
 ola vs Uber
 adding address to user because wen dropping it will popup as drop at home: no.18,...
-cabbooking applicarion.java line 29
+cabbooking application.java line 29
 
 Option to track location
 CBA Line 20, Na also printed in stationpoint
@@ -17,5 +17,6 @@ not all drivers can join same location, put drivers in demading locations.
 
 why no. of wheels in vehicle and car??whyyyyyyy
 
+unique username, driver feedback; enjoy primeplay on the ride stuff;
 
-
+HashSet is universal and fast, treeset is ordered,LinkedHashset keeps insertion order..

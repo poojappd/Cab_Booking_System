@@ -42,7 +42,8 @@ enum CarType{
     PRIME,
     SEDAN,
     SUV,
-    MINI
+    MINI,
+    NONE
 
 }
 
@@ -84,22 +85,22 @@ class User{
    
 }
 class Location{
-    Location(float xCoordinate, float yCoordinate, StationPoint stationPoint, String area){
+    Location(double xCoordinate, double yCoordinate, StationPoint stationPoint, String area){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.stationPoint = stationPoint;
         this.area = area;
     }
-    private float xCoordinate;
-    private float yCoordinate;
+    private double xCoordinate;
+    private double yCoordinate;
     private StationPoint stationPoint;
     private String area;
 
-    public float getxCoordinate() {
+    public double getxCoordinate() {
         return xCoordinate;
     }
 
-    public float getyCoordinate() {
+    public double getyCoordinate() {
         return yCoordinate;
     }
 
@@ -110,7 +111,7 @@ class Location{
         return area;
     }
 }
-class Vehicle{
+class Vehicle {
     private String vehicleId;
     private String vehicleName;
     private VehicleType vehicleType;
@@ -122,13 +123,14 @@ class Vehicle{
     private String numberPlate;
     private int maxOccupants;
 
-    Vehicle(String vehicleName, VehicleType vehicleType, String numberPlate, int numberOfSeats, int maxOccupants){
+    Vehicle(String vehicleName, VehicleType vehicleType, String numberPlate, int numberOfSeats, int maxOccupants) {
         this.vehicleName = vehicleName;
         this.vehicleType = vehicleType;
         this.numberPlate = numberPlate;
         this.maxOccupants = maxOccupants;
         this.numberOfSeats = numberOfSeats;
     }
+
     public String getVehicleId() {
         return vehicleId;
     }
@@ -153,31 +155,21 @@ class Vehicle{
         return fuelLevel;
     }
 
-    void setFuelLevel(){}
+    void setFuelLevel() {
+    }
 
     public String getVehicleDriverId() {
         return vehicleDriverId;
     }
+
     public void setVehicleDriverId(String vehicleDriverId) {
         this.vehicleDriverId = vehicleDriverId;
     }
-/*
-    public String getVehicleId(){
+    public int getMaxOccupants(){
+        return maxOccupants;
     }
-    public String getVehicleName();
-    public String getOwnerId();
-    public String getNumberPlate();
-    public int getNumberOfWheels();
-    public int getMileage();
-    public int getFuelLevel();
 
-
-
-    public String getVehicleDriverId() {
-        return vehicleDriverId;
-    }*/
 }
-
 class Car extends Vehicle{
     private CarType carType;
     private boolean airConditionerPresent;
@@ -196,8 +188,12 @@ class Car extends Vehicle{
     void setWifi(){
         this.wifiPresent = true;
     }
-    float addConvenienceFee();
-    public CarType getCarType();
+    float addConvenienceFee(){
+        return 0;
+    }
+    public CarType getCarType(){
+        return carType;
+    }
 }
 class Trip {
     private String PassengerName;
@@ -209,16 +205,13 @@ class Trip {
     private CabBookingStatus cabBookingStatus;
 
 
-    public String getPassengerName();
+    /*public String getPassengerName(){}
     public String getDriverName();
     public LocalDateTime getCabBookedTime();
     public LocalDateTime getCabReachedTime();
     public Location getFromLocation();
     public Location getToLocation();
-    public CabBookingStatus getCabBookingStatus();
-}
-class FareCalculator{
-
+    public CabBookingStatus getCabBookingStatus(); */
 }
 class Bike extends Vehicle{
     private final int maxOccupants = 1;
@@ -227,7 +220,7 @@ class Bike extends Vehicle{
     private final float BikeRate = 0.25f;
 
     Bike(String vehicleName, String numberPlate){
-        super(vehicleName, VehicleType.AUTO_RICKSHAW, numberPlate, 1, 1);
+        super(vehicleName, VehicleType.BIKE, numberPlate, 1, 1);
     }
     public int getMaxOccupants() {
         return maxOccupants;

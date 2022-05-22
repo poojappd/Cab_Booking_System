@@ -84,12 +84,7 @@ public class CabBookingApp {//change name, common to all users
                         System.out.println("Does the air conditioner work in your car?\n1.Yes\n2.No");
                         int option = UserInputGetter.getMenuChoiceInput(2);
                         boolean airConditionerPresent;
-                        if(option == 1){
-                            airConditionerPresent = true;
-                        }
-                        else {
-                            airConditionerPresent = false;
-                        }
+                        airConditionerPresent = option == 1;
                         CarType carType;
                         if(numberOfSeats ==3){
                             carType = CarType.MINI;
@@ -152,10 +147,10 @@ public class CabBookingApp {//change name, common to all users
                 3. Employee
                 \s""");
         int chosenMenuOption = UserInputGetter.getMenuChoiceInput(3);
-        switch (chosenMenuOption){
+        /*switch (chosenMenuOption){
             case 1 -> userLogin();
             case 2 -> employeeLogin();
-        }
+        }*/
     }
 
 
@@ -174,6 +169,7 @@ public class CabBookingApp {//change name, common to all users
     }
 
     public static void main(String[] args) {
+        initializer();
         int chosenMenuOption = 0;
         while (chosenMenuOption != -1) {
             viewWelcomeScreen();
@@ -188,6 +184,8 @@ public class CabBookingApp {//change name, common to all users
     }
 
     static void initializer(){
-
+        Admin admin = Admin.instantiateOnce("Admin@123");
+        admin.createMap();
+        admin.initializeCabCentralHub();
     }
 }

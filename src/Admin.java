@@ -29,8 +29,8 @@ public class Admin {
                 //use comma as separator
                 StationPoint stationPoint = StationPoint.valueOf(CsvValues[0].replaceAll("\\s", ""));
                 String area = CsvValues[1];
-                float xCoordinate = Float.parseFloat(CsvValues[2]);
-                float yCoordinate = Float.parseFloat(CsvValues[3]);
+                double xCoordinate = Double.parseDouble(CsvValues[2]);
+                double yCoordinate = Double.parseDouble(CsvValues[3]);
                 Location location = new Location(xCoordinate, yCoordinate, stationPoint, area);
                 Map.addToMap(location);
 
@@ -56,6 +56,9 @@ public class Admin {
         Bike vehicle3 = new Bike("Honda Splendor", "ap7623");
         newDriver3.setDriveableVehicleType(VehicleType.BIKE);
         newDriver3.setAssociatedVehicle(vehicle3);
+        cabCentre1.addVehicleWithDriver(vehicle1, newDriver1);
+        cabCentre1.addVehicleWithDriver(vehicle2,newDriver2);
+        cabCentre1.addVehicleWithDriver(vehicle3, newDriver3);
         CabCentralHub.addCabCentre(this, cabCentre1, StationPoint.ALANDUR);
 
         CabCentre cabCentre2 = new CabCentre(StationPoint.TAMBARAM);
@@ -71,23 +74,28 @@ public class Admin {
         Bike vehicle31 = new Bike("Yezdi Roadster", "kn7624");
         newDriver31.setDriveableVehicleType(VehicleType.BIKE);
         newDriver31.setAssociatedVehicle(vehicle31);
-        CabCentralHub.addCabCentre(this, cabCentre1, StationPoint.TAMBARAM);
+        cabCentre2.addVehicleWithDriver(vehicle11, newDriver11);
+        cabCentre2.addVehicleWithDriver(vehicle21, newDriver21);
+        cabCentre2.addVehicleWithDriver(vehicle31, newDriver31);
+        CabCentralHub.addCabCentre(this, cabCentre2, StationPoint.TAMBARAM);
 
         CabCentre cabCentre3 = new CabCentre(StationPoint.GUDUVANCHERY);
-        Driver newDriver13 = new Driver("Maddy", 25, "MaddyMaddy1254","Maddy$344".toCharArray(), StationPoint.GUDUVANCHERY, 8, IdGenerator.generateDriverId(StationPoint.GUDUVANCHERY));
-        Car vehicle13 = new Car("Toyota Innova", "MP8796", 6, 6, true,CarType.SUV);
-        newDriver13.setDriveableVehicleType(VehicleType.CAR);
-        newDriver13.setAssociatedVehicle(vehicle13);
-        Driver newDriver23 = new Driver("Rambo", 30, "RamboRomeo12","TheRambo&@35".toCharArray(), StationPoint.GUDUVANCHERY, 7, IdGenerator.generateDriverId(StationPoint.GUDUVANCHERY));
-        AutoRickshaw vehicle23 = new AutoRickshaw("Bajaj-RE", "tn3467");
-        newDriver23.setDriveableVehicleType(VehicleType.AUTO_RICKSHAW);
-        newDriver23.setAssociatedVehicle(vehicle23);
-        Driver newDriver33 = new Driver("Chad", 23, "chad654","Chad@23Cabs".toCharArray(), StationPoint.GUDUVANCHERY, 9, IdGenerator.generateDriverId(StationPoint.GUDUVANCHERY));
-        Bike vehicle33 = new Bike("Honda Splendor", "tn9856");
-        newDriver33.setDriveableVehicleType(VehicleType.BIKE);
-        newDriver33.setAssociatedVehicle(vehicle33);
-
-        CabCentralHub.addCabCentre(this, cabCentre1, StationPoint.GUDUVANCHERY);
+        Driver newDriver12 = new Driver("Maddy", 25, "MaddyMaddy1254","Maddy$344".toCharArray(), StationPoint.GUDUVANCHERY, 8, IdGenerator.generateDriverId(StationPoint.GUDUVANCHERY));
+        Car vehicle12 = new Car("Toyota Innova", "MP8796", 6, 6, true,CarType.SUV);
+        newDriver12.setDriveableVehicleType(VehicleType.CAR);
+        newDriver12.setAssociatedVehicle(vehicle12);
+        Driver newDriver22 = new Driver("Rambo", 30, "RamboRomeo12","TheRambo&@35".toCharArray(), StationPoint.GUDUVANCHERY, 7, IdGenerator.generateDriverId(StationPoint.GUDUVANCHERY));
+        AutoRickshaw vehicle22 = new AutoRickshaw("Bajaj-RE", "tn3467");
+        newDriver22.setDriveableVehicleType(VehicleType.AUTO_RICKSHAW);
+        newDriver22.setAssociatedVehicle(vehicle22);
+        Driver newDriver32 = new Driver("Chad", 23, "chad654","Chad@23Cabs".toCharArray(), StationPoint.GUDUVANCHERY, 9, IdGenerator.generateDriverId(StationPoint.GUDUVANCHERY));
+        Bike vehicle32 = new Bike("Honda Splendor", "tn9856");
+        newDriver32.setDriveableVehicleType(VehicleType.BIKE);
+        newDriver32.setAssociatedVehicle(vehicle32);
+        cabCentre3.addVehicleWithDriver(vehicle12, newDriver12);
+        cabCentre3.addVehicleWithDriver(vehicle22, newDriver22);
+        cabCentre3.addVehicleWithDriver(vehicle32, newDriver32);
+        CabCentralHub.addCabCentre(this, cabCentre3, StationPoint.GUDUVANCHERY);
 
     }
 

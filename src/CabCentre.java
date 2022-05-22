@@ -3,14 +3,17 @@ import java.util.HashMap;
 
 class CabCentre {
     private StationPoint locatedStationPoint;
+    private HashMap<VehicleType, ArrayList<VehicleInfo>> activeVehiclesInfo;
     private HashMap<VehicleType, ArrayList<Vehicle>> allAvailableVehicles;
     private HashMap<String, Driver> availableDrivers;
-    private
+
     private HashMap<VehicleType, ArrayList<Vehicle>> vehiclesWithNoDriverAssigned;
     private HashMap<VehicleType, ArrayList<Driver>> driverWithNoVehicleAssigned;
 
 
+    StationPoint getLocatedStationPoint(){
 
+    }
     CabCentre(StationPoint locatedStationPoint){
         this.locatedStationPoint = locatedStationPoint;
         setCabCentre();
@@ -21,6 +24,17 @@ class CabCentre {
         newVehicle.setVehicleDriverId(newDriver.getDriverId());
         allAvailableVehicles.get(newVehicle.getVehicleType()).add(newVehicle);
         availableDrivers.put(newDriver.getDriverId(), newDriver);
+        String model;
+        if(newVehicle instanceof Car){
+            model = ((Car) newVehicle).getCarType().toString();
+        }
+        else {
+            model = newVehicle.getVehicleName();
+        }
+
+        activeVehiclesInfo.get(newVehicle.getVehicleType()).add(
+                new VehicleInfo(newDriver.getDriverId(), newVehicle.getVehicleId(),newVehicle.getVehicleType(),
+                        model, newVehicle.getMaxOccupants()));
 
     }
 
@@ -48,19 +62,19 @@ class CabCentre {
 
     }
 
-    void getAvailableVehicles(CabCentralHub centralHub){
-        ArrayList<Vehicle> activeVehicles = new ArrayList<>();
-        for(Driver driver:availableDrivers.values()){
-            if(driver.getActiveStatus()){
-                activeDrivers.add(driver);
-            }
-        }
+    HashMap<VehicleType, ArrayList<VehicleInfo>> getAvailableVehicleInfo(){
+
+       return activeVehiclesInfo;
     }
     void arrangeTrip(){
 
     }
     private void setCabCentre(){
-
+        allAvailableVehicles = new HashMap<>();
+        vehiclesWithNoDriverAssigned = new HashMap<>();
+        driverWithNoVehicleAssigned = new HashMap<>();
+        availableDrivers = new HashMap<>();
+        activeVehiclesInfo = new HashMap<>();
         allAvailableVehicles.put(VehicleType.CAR, new ArrayList<>());
         allAvailableVehicles.put(VehicleType.AUTO_RICKSHAW, new ArrayList<>());
         allAvailableVehicles.put(VehicleType.BIKE, new ArrayList<>());
@@ -70,5 +84,8 @@ class CabCentre {
         driverWithNoVehicleAssigned.put(VehicleType.CAR,new ArrayList<>());
         driverWithNoVehicleAssigned.put(VehicleType.AUTO_RICKSHAW, new ArrayList<>());
         driverWithNoVehicleAssigned.put(VehicleType.BIKE, new ArrayList<>());
+        activeVehiclesInfo.put(VehicleType.CAR, new ArrayList<>());
+        activeVehiclesInfo.put(VehicleType.AUTO_RICKSHAW, new ArrayList<>());
+        activeVehiclesInfo.put(VehicleType.BIKE, new ArrayList<>());
     }
 }
