@@ -24,6 +24,10 @@ public class Driver extends User{
         this.driveableVehicleType = driveableVehicleType;
     }
 
+    public StationPoint getDefaultStationPoint() {
+        return defaultStationPoint;
+    }
+
     public void setAssociatedVehicle(Vehicle associatedVehicle) {
         this.associatedVehicle = associatedVehicle;
     }
@@ -65,8 +69,48 @@ public class Driver extends User{
                 associatedVehicle.getNumberPlate()   );
     }
 
-    public void pickupCustomer(Location fromLocation, Location toLocation, int tripOtp){
+    public void pickupCustomer(Location fromLocation, Location toLocation, int tripOtp, String bookingId){
+        try{
+            System.out.println("\nDriver will be arriving at your location in");
+            for (int i = 5; i >=1; i--) {
+                System.out.println(i+" minutes...");
+                Thread.sleep(2000);
+            }
+            System.out.println("Driver has arrived at your location, please enter the otp: ");
+            int passengerOtp = UserInputGetter.getIntInput();
+            boolean otpMatched = (tripOtp == passengerOtp);
+            String otpMatchedMessage = "Otp verified! Enjoy your ride";
+            String otpNotMatchedMessage = "Sorry, your otp didn't match!";
+            if(!otpMatched){
+                int tries = 3;
+                for (int i = 3; i >= 1; i--) {
+                    String tryWord = (i==1?" try":" tries");
+                    System.out.println("Invalid otp!!!\n" +
+                            "Re-enter your otp - "+i+tryWord+"  left");
+                    passengerOtp = UserInputGetter.getIntInput();
+                    if(passengerOtp == tripOtp){
+                        otpMatched = true;
+                        break;
+                    }
+                }
+            }
+            if(otpMatched){
+                System.out.println(otpMatchedMessage);
+                CabCentralHub.updateDriverStatus(this, ActiveStatus.ENGAGED);
+                CabCentralHub.setBookingStatus(this, bookingId, CabBookingStatus.SUCCESS);
+            }
+            else {
+                System.out.println(otpNotMatchedMessage);
+                CabCentralHub.setBookingStatus(this, bookingId, CabBookingStatus.CANCELLED);
+                throw new InterruptedException();
+            }
 
+        }
+        catch (InterruptedException ie){
+            System.out.println("Ride cancelled !!");
+            CabCentralHub.setBookingStatus(this, bookingId, CabBookingStatus.CANCELLED);
+        }
+        System.out.println("");
     }
 
     void setActiveStatus(CabCentralHub centralHub, boolean isActive){

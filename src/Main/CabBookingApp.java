@@ -2,6 +2,8 @@ package Main;
 
 import App.*;
 
+import java.util.ArrayList;
+
 public class CabBookingApp {//change name, common to all users
 
     private static String createUserName(){
@@ -142,17 +144,116 @@ public class CabBookingApp {//change name, common to all users
         }
     }
 
-    static void passengerLogin(){
-        System.out.println("Enter your username");
-        String userName = UserInputGetter.getStringInput();
-        char [] password = UserInputGetter.getStringInput().toCharArray();
-        User user = Database.verifyUser(userName, password);
-        if(user == null){
-            System.out.println("Incorrect password! Please re-enter your account credentials");
-            passengerLogin();
+    static void passengerServices(Passenger passenger){
+        boolean logout = false;
+        while (!logout) {
+            System.out.println("How may we help you?");
+            System.out.println("""
+                    1. Book cab
+                    2. Schedule a cab ride
+                    3. Rent a cab
+                    4. Share a cab with others (Discount on Fare!)
+                    5. View Booking History
+                    6. Logout of account
+                    """);
+            int chosenMenuOption = UserInputGetter.getMenuChoiceInput(6);
+            switch (chosenMenuOption) {
+                case 1 -> BookCab(passenger);
+                case 5 -> viewBookingHistory(passenger);
+                case 6 -> logout = true;
+            }
+        }
+    }
+
+    static void BookCab(Passenger passenger) {
+        System.out.println("""
+                Select your pickup area
+                 1. From your home
+                 2. Choose from other locations""");
+        int chosenMenuOption = UserInputGetter.getMenuChoiceInput(2);
+        Location passengerCurrentLocation;
+        Location passengerDestinationLocation;
+
+        if (chosenMenuOption == 1){
+            passengerCurrentLocation = passenger.getHomeLocation();
+        }
+        else{
+            System.out.println("Which base area are you in right now?");
+            Map.viewBaseLocations();
+            StationPoint passengerCurrentStation = StationPoint.values()[UserInputGetter.getMenuChoiceInput(Map.getBaseLocationCount()) - 1];
+            System.out.println();
+            Map.viewLocationFromBaseLocation(passengerCurrentStation);
+            chosenMenuOption = UserInputGetter.getMenuChoiceInput(Map.getAreaCount(passengerCurrentStation));
+            passengerCurrentLocation = Map.getLocationFromOption(passengerCurrentStation, chosenMenuOption);
+        }
+        System.out.println("""
+                Select your dropping point
+                 1. To your home
+                 2. Choose from other locations""");
+        chosenMenuOption = UserInputGetter.getMenuChoiceInput(2);
+
+        if(chosenMenuOption == 1){
+            passengerDestinationLocation = passenger.getHomeLocation();
         }
         else {
-            System.out.println("Welcome "+userName+" !");
+
+            System.out.println("Select your destination area");
+            Map.viewBaseLocations();
+            StationPoint passengerDestinationStation = StationPoint.values()[UserInputGetter.getMenuChoiceInput(Map.getBaseLocationCount()) - 1];
+            Map.viewLocationFromBaseLocation(passengerDestinationStation);
+            chosenMenuOption = UserInputGetter.getMenuChoiceInput(Map.getAreaCount(passengerDestinationStation));
+            passengerDestinationLocation = Map.getLocationFromOption(passengerDestinationStation, chosenMenuOption);
+        }
+
+        System.out.println("Searching cabs...");
+        ArrayList<Object> resultList =
+                CabCentralHub.searchAvailableVehiclesFromLocation(passengerCurrentLocation, passengerDestinationLocation);
+        int cancelOption = resultList.size();
+        System.out.println("Choose a vehicle to book your ride\n" +
+                "Enter " + cancelOption + " to cancel");
+        chosenMenuOption = UserInputGetter.getMenuChoiceInput(cancelOption);
+
+        if (chosenMenuOption != cancelOption) {
+
+                VehicleInfo bookedVehicleInfo = (VehicleInfo) resultList.get(chosenMenuOption);
+                String driverId = bookedVehicleInfo.getDriverId();
+                StationPoint cabCentreStationPoint = (StationPoint) resultList.get(0);
+                int tripOtp = IdGenerator.generateOtp();
+                System.out.println("Book " + bookedVehicleInfo.getVehicleType() + " - " +
+                        bookedVehicleInfo.getModel() + " for Rs." + bookedVehicleInfo.getFare() + " ?\n" +
+                        "1. Book ride\n" +
+                        "2. Cancel");
+                int chosenOption = UserInputGetter.getMenuChoiceInput(2);
+
+                if (chosenOption == 1) {
+
+                    System.out.println("Booking Confirmed! \n" +
+                            "Please note this otp for verification " + tripOtp);
+
+                    Booking newBooking = CabCentralHub.arrangeTrip(passenger.getUserName(), passenger.getFullName(),
+                            passengerCurrentLocation, passengerDestinationLocation, tripOtp,
+                            driverId, cabCentreStationPoint, bookedVehicleInfo);
+                    passenger.addToBookingHistory(newBooking);
+                }
+        }
+
+    }
+
+
+    static void viewBookingHistory(Passenger passenger){
+        ArrayList<Booking> bookingHistory = passenger.getBookingHistory();
+        System.out.println("---------------------         Booking History         ---------------------\n");
+        for(Booking bookings:bookingHistory){
+            System.out.println("Booking time:     "+bookings.getCabBookedTime());
+            System.out.println("Booking Id:       "+bookings.getBookingId());
+            System.out.println("From :            "+bookings.getFromLocation().getStationPoint()+" - "+ bookings.getFromLocation().getArea()
+                    +"\nTo :            "+bookings.getToLocation().getStationPoint()+" - "+ bookings.getToLocation().getArea());
+            System.out.println(bookings.getCabBookingStatus());
+            System.out.println("Driver name :     "+ bookings.getDriverName());
+            System.out.println("Vehicle details:  "+bookings.getVehicleInfo().getVehicleType()+" " +bookings.getVehicleInfo().getModel());
+            System.out.println("\n Total Fare: -----> "+bookings.getVehicleInfo().getFare());
+            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+
         }
     }
     static void chooseAccountForNewUser(){
@@ -169,17 +270,26 @@ public class CabBookingApp {//change name, common to all users
         }
     }
 
-    static void chooseAccountForExistingUser(){
-        System.out.println("""
-                Choose your Account type
-                1. User\s
-                2. Admin\s
-                3. Employee
-                \s""");
-        int chosenMenuOption = UserInputGetter.getMenuChoiceInput(3);
-        switch (chosenMenuOption){
-            case 1 -> passengerLogin();
-            //case 2 -> employeeLogin();
+    static void login(){
+        System.out.println("Enter your username");
+        String userName = UserInputGetter.getStringInput();
+        System.out.println("And your password...");
+        char [] password = UserInputGetter.getStringInput().toCharArray();
+        User user = Database.verifyUser(userName, password);
+        if(user == null){
+            System.out.println("\nInvalid username or password!\nPlease re-enter your account credentials");
+            login();
+        }
+        else {
+            System.out.println("\n\nWelcome "+user.getFullName()+" !");
+
+            if(user instanceof Passenger) {
+                passengerServices((Passenger)(user));
+            }
+            else if(user instanceof Driver){
+                //employeeServices(user);
+            }
+
         }
     }
 
@@ -199,7 +309,7 @@ public class CabBookingApp {//change name, common to all users
     }
 
     public static void main(String[] args) {
-        initializer();
+        initialize();
         int chosenMenuOption = 0;
         while (chosenMenuOption != -1) {
             viewWelcomeScreen();
@@ -209,12 +319,13 @@ public class CabBookingApp {//change name, common to all users
                 chooseAccountForNewUser();
             }
             else if(chosenMenuOption == 2)
-                chooseAccountForExistingUser();
+                login();
         }
     }
 
-    static void initializer(){
+    static void initialize(){
         Admin admin = Admin.instantiateOnce("Admin@123");
+        assert admin != null;
         admin.createMap();
         admin.initializeCabCentralHub();
     }

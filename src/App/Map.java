@@ -74,6 +74,7 @@ public class Map {
             Location source = getLocationFromOption(fromStationPoint,1);
             Location destination = getLocationFromOption(checkPoint, 1);
             double currentDistance =  calculateDistance(source, destination);
+
             if(minDistance > currentDistance){
                 minDistance = currentDistance;
                 nearestStationPoint = destination.getStationPoint();

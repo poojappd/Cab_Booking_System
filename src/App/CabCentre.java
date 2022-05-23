@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 class CabCentre {
-    private StationPoint locatedStationPoint;
-    private HashMap<VehicleType, ArrayList<VehicleInfo>> activeVehiclesInfo;
+    private final StationPoint locatedStationPoint;
+    private static HashMap<VehicleType, ArrayList<VehicleInfo>> activeVehiclesInfo;
     private HashMap<VehicleType, ArrayList<Vehicle>> allAvailableVehicles;
     private HashMap<String, Driver> availableDrivers;
 
@@ -36,7 +36,7 @@ class CabCentre {
 
         activeVehiclesInfo.get(newVehicle.getVehicleType()).add(
                 new VehicleInfo(newDriver.getDriverId(), newVehicle.getVehicleId(),newVehicle.getVehicleType(),
-                        model, newVehicle.getMaxOccupants()));
+                        model, newVehicle.getMaxOccupants(),newDriver.getFullName()));
 
     }
 
@@ -67,14 +67,18 @@ class CabCentre {
     private Driver getDriverFromId(String driverId){
         return availableDrivers.get(driverId);
     }
+    String getDriverNameFromId(String driverId){
+        return availableDrivers.get(driverId).getFullName();
+    }
+
     HashMap<VehicleType, ArrayList<VehicleInfo>> getAvailableVehicleInfo(){
 
        return activeVehiclesInfo;
     }
     void arrangeRide(String driverId, String passengerName, Location passengerFromLocation,
-                     Location passengerToLocation, int tripOtp ){
+                     Location passengerToLocation, int tripOtp, String bookingId ){
         Driver assignDriver = getDriverFromId(driverId);
-        assignDriver.pickupCustomer(passengerFromLocation, passengerToLocation, tripOtp);
+        assignDriver.pickupCustomer(passengerFromLocation, passengerToLocation, tripOtp, bookingId);
 
     }
     private void setCabCentre(){

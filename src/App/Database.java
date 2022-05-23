@@ -1,5 +1,6 @@
 package App;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Database{
@@ -11,17 +12,11 @@ public class Database{
 
     private void getUser(String userName){}
     public static User verifyUser(String userName, char[] password){
-        if(userCredentials.get(userName) == null){
-            System.out.println("No such users");
-        }
-        else {
-            if(userCredentials.get(userName).equals(password)){
+        char[] actualUserPassword = EncryptDecrypt.decrypt(userCredentials.get(userName));
+
+        if(!(userCredentials.get(userName) == null) && Arrays.equals(actualUserPassword, password)){
                 return allUsers.get(userName);
             }
-            else {
-                System.out.println("Incorrect password");
-            }
-        }
 
         return null;
     }

@@ -1,15 +1,15 @@
 package App;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CabCentralHub {//admin
 
-    private static HashMap<StationPoint, CabCentre> allCabCentres = new HashMap<>();
+    private static final HashMap<StationPoint, CabCentre> allCabCentres = new HashMap<>();
+    private static final CabCentralHub thisCentralHub = new CabCentralHub();
+    private static final HashMap<String, Booking> allPassengerBookingHistory = new HashMap<>();
 
-    CabCentralHub(){
-        allCabCentres = new HashMap<>();
-    }
     static void addCabCentre(Admin admin, CabCentre cabCentre, StationPoint stationPoint){
         allCabCentres.put(stationPoint, cabCentre);
     }
@@ -30,7 +30,7 @@ public class CabCentralHub {//admin
         }
         return chosenCabCentre;
     }
-    static ArrayList<Object> searchAvailableVehiclesFromLocation(Location fromLocation, Location destination) {
+    public static ArrayList<Object> searchAvailableVehiclesFromLocation(Location fromLocation, Location destination) {
 
         CabCentre chosenCabCentre = getNearbyCabCentre(fromLocation, destination);
         ArrayList<Object> resultList = new ArrayList<>();
@@ -58,30 +58,79 @@ public class CabCentralHub {//admin
         int i = 1;
         for (VehicleType vehicleType : activeVehicles.keySet()) {
 
-
            for (VehicleInfo vehicleInfo : activeVehicles.get(vehicleType)) {
                if (vehicleInfo.activeStatus == ActiveStatus.ACTIVE) {
+                   double fare = FareCalculator.calculateFare(vehicleInfo.getVehicleType(), vehicleInfo.getModel(),
+                           Map.calculateDistance(fromLocation, destination));
+
                    System.out.printf("%25d %25s %25s %25s %25s", i, vehicleInfo.getVehicleType(), vehicleInfo.getModel(),
-                           vehicleInfo.getMaxOccupants(),
-                           FareCalculator.calculateFare(vehicleInfo.getVehicleType(), vehicleInfo.getModel(),
-                                   Map.calculateDistance(fromLocation, destination)));
+                           vehicleInfo.getMaxOccupants(), fare);
                    System.out.println();
                    i++;
-                   resultList.add(vehicleInfo.getDriverId());
+                   vehicleInfo.setFare(fare);
+                   resultList.add(vehicleInfo);
                }
+
            }
+
         }
         return resultList;
     }
 
 
-    static void arrangeTrip(String passengerName, Location passengerFromLocation,
-                            Location passengerToLocation, int tripOtp, String driverId, StationPoint cabCentreStationPoint){
+    public static Booking arrangeTrip(String userName, String passengerName, Location passengerFromLocation,
+                            Location passengerToLocation, int tripOtp, String driverId, StationPoint cabCentreStationPoint, VehicleInfo vehicleInfo){
+
         CabCentre chosenCabCentre = allCabCentres.get(cabCentreStationPoint);
+        String chosenDriverName = chosenCabCentre.getDriverNameFromId(driverId);
+        LocalDateTime bookingTime = LocalDateTime.now();
+        Booking newBooking = new Booking(passengerName, chosenDriverName,
+                CabServiceType.CAB_BOOKING, bookingTime, passengerFromLocation,
+                passengerToLocation, vehicleInfo);
+        allPassengerBookingHistory.put(newBooking.getBookingId(),newBooking);
+
         chosenCabCentre.arrangeRide(driverId, passengerName, passengerFromLocation,
-                passengerToLocation, tripOtp );
+                passengerToLocation, tripOtp, newBooking.getBookingId() );
+
+        return newBooking;
 
     }
+
+    static void updateDriverStatus(Driver driver, ActiveStatus activeStatus){
+        CabCentre driverCabCentre = allCabCentres.get(driver.getDefaultStationPoint());
+        HashMap<VehicleType, ArrayList<VehicleInfo>> activeVehiclesInfo = driverCabCentre.getAvailableVehicleInfo();
+        activeVehiclesInfo.forEach((k,v) ->
+        {
+            for (VehicleInfo vehicleInfo: v) {
+                if(vehicleInfo.getDriverId().equals(driver.getDriverId())){
+                    vehicleInfo.setActiveStatus(activeStatus);
+                }
+            }
+        });
+
+    }
+
+    static void setBookingStatus(Driver driver, String bookingId, CabBookingStatus status){
+        Booking pastBooking = allPassengerBookingHistory.get(bookingId);
+        if(pastBooking != null){
+            pastBooking.setCabBookingStatus(status);
+        }
+
+    }
+//    public static void main(String[] args) {
+//        Admin admin = Admin.instantiateOnce("Admin@123");
+//        assert admin != null;
+//        admin.createMap();
+//        admin.initializeCabCentralHub();
+//        Location from = Map.getLocationFromOption(StationPoint.PALLAVARAM,1);
+//        Location to = Map.getLocationFromOption(StationPoint.THAILAVARAM,1);
+//        ArrayList<VehicleInfo> search = CabCentralHub.searchAvailableVehiclesFromLocation(from, to);
+//
+//        for (VehicleInfo vehicleInfo :search){
+//            System.out.println(vehicleInfo.getVehicleType()+" "+vehicleInfo.getModel()+" "+ vehicleInfo.getFare());
+//        }
+//
+//    }
 
 
 
