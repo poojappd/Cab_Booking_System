@@ -10,8 +10,8 @@ public class Driver extends User{
     private int currentRideCount;
     private VehicleType driveableVehicleType;//why do we need this wen we cN ssign vehicle directlu
     private Vehicle associatedVehicle;
-    StationPoint defaultStationPoint;
-    StationPoint currentStationPoint;
+    private StationPoint defaultStationPoint;
+    private StationPoint currentStationPoint;
     private boolean isActive;
 
     public Driver(String fullName, int age, String userName, char[] password,
@@ -44,7 +44,7 @@ public class Driver extends User{
         return rideLimitPerDay;
     }
 
-    //public void setReachedFareLimit(boolean reachedRideLimit) this.reachedRideLimit = reachedRideLimit;}
+    //public void setReachedFareLimit() this.reachedRideLimit = true;}
 
     public boolean hasReachedFareLimit() {
         return reachedRideLimit;

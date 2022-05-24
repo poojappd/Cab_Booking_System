@@ -260,8 +260,8 @@ public class CabBookingApp {//change name, common to all users
         ArrayList<BookingHistory> bookingHistory = passenger.getBookingHistory();
         System.out.println("---------------------         BookingHistory History         ---------------------\n");
         for(BookingHistory bookings:bookingHistory){
-            System.out.println("BookingHistory time:     "+bookings.getCabBookedTime());
-            System.out.println("BookingHistory Id:       "+bookings.getBookingId());
+            System.out.println("Booking time:     "+bookings.getCabBookedTime());
+            System.out.println("BookingHistory Id:"+bookings.getBookingId());
             System.out.println("From :            "+bookings.getFromLocation().getStationPoint()+" - "+ bookings.getFromLocation().getArea()
                     +"\nTo :            "+bookings.getToLocation().getStationPoint()+" - "+ bookings.getToLocation().getArea());
             System.out.println(bookings.getCabBookingStatus());

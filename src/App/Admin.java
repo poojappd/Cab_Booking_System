@@ -21,14 +21,13 @@ public class Admin {
     }
     public void createMap(){
         String linesInCSV;
-        String splitBy = ",";
+        String toRemove = ",";
         try {
 
             BufferedReader br = new BufferedReader(new FileReader("resources/MapData.csv"));
             while ((linesInCSV = br.readLine()) != null)
             {
-                String[] CsvValues = linesInCSV.split(splitBy);
-                //use comma as separator
+                String[] CsvValues = linesInCSV.split(toRemove);
                 StationPoint stationPoint = StationPoint.valueOf(CsvValues[0].replaceAll("\\s", ""));
                 String area = CsvValues[1];
                 double xCoordinate = Double.parseDouble(CsvValues[2]);

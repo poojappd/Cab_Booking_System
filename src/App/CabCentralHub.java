@@ -59,7 +59,7 @@ public class CabCentralHub {//admin
         for (VehicleType vehicleType : activeVehicles.keySet()) {
 
            for (VehicleInfo vehicleInfo : activeVehicles.get(vehicleType)) {
-               if (vehicleInfo.activeStatus == ActiveStatus.ACTIVE) {
+               if (vehicleInfo.getActiveStatus() == ActiveStatus.ACTIVE) {
                    double fare = FareCalculator.calculateFare(vehicleInfo.getVehicleType(), vehicleInfo.getModel(),
                            Map.calculateDistance(fromLocation, destination));
 

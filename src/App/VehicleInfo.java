@@ -12,7 +12,7 @@ public class VehicleInfo {
     private String model;
     private int maxOccupants;
     private double fare;
-    ActiveStatus activeStatus;
+    private ActiveStatus activeStatus;
 
     public VehicleInfo(String driverId, String vehicleId, VehicleType vehicleType, String model, int maxOccupants, String driverName){
         this.driverId = driverId;

@@ -1,10 +1,10 @@
 package App;
 
 public enum CarType{
-    PRIME,
+    //PRIME,
     SEDAN,
     SUV,
     MINI,
-    NONE
+    VAN
 
 }
