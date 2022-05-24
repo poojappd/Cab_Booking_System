@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class ValidatingTool {
     static Scanner input = new Scanner(System.in);
+
     public static String validatePassword(String password) {
         boolean passwordIsNotValid = true;
         while (passwordIsNotValid) {

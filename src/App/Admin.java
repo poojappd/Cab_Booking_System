@@ -47,7 +47,7 @@ public class Admin {
     public void initializeCabCentralHub(){
         CabCentre cabCentre1 = new CabCentre(StationPoint.ALANDUR);
         Driver newDriver1 = new Driver("Perumal", 35, "peru","peru@35Cabs".toCharArray(), StationPoint.ALANDUR, 5, IdGenerator.generateDriverId(StationPoint.ALANDUR));
-        Car vehicle1 = new Car("Maruti Swift", "tn4567", 4, 4, true,CarType.SEDAN);
+        Car vehicle1 = new Car("Maruti Swift", "tn4567", 4, true,CarType.SEDAN);
         newDriver1.setDriveableVehicleType(VehicleType.CAR);
         newDriver1.setAssociatedVehicle(vehicle1);
         Driver newDriver2 = new Driver("Muthu", 30, "Muthu133","Muthu@30Cabs".toCharArray(), StationPoint.ALANDUR, 5, IdGenerator.generateDriverId(StationPoint.ALANDUR));
@@ -65,7 +65,7 @@ public class Admin {
 
         CabCentre cabCentre2 = new CabCentre(StationPoint.TAMBARAM);
         Driver newDriver11 = new Driver("Kumar", 35, "kumar@35Cabs","Kumar#123".toCharArray(), StationPoint.TAMBARAM, 10, IdGenerator.generateDriverId(StationPoint.TAMBARAM));
-        Car vehicle11 = new Car("Maruti Swift", "tn8765", 4, 4, true,CarType.SEDAN);
+        Car vehicle11 = new Car("Maruti Swift", "tn8765",  4, true,CarType.SEDAN);
         newDriver11.setDriveableVehicleType(VehicleType.CAR);
         newDriver11.setAssociatedVehicle(vehicle11);
         Driver newDriver21 = new Driver("Sam Anderson", 40, "SamAndy@40Cabbz","Sammy#$56".toCharArray(), StationPoint.TAMBARAM, 7, IdGenerator.generateDriverId(StationPoint.TAMBARAM));
@@ -83,7 +83,7 @@ public class Admin {
 
         CabCentre cabCentre3 = new CabCentre(StationPoint.GUDUVANCHERY);
         Driver newDriver12 = new Driver("Maddy", 25, "MaddyMaddy1254","Maddy$344".toCharArray(), StationPoint.GUDUVANCHERY, 8, IdGenerator.generateDriverId(StationPoint.GUDUVANCHERY));
-        Car vehicle12 = new Car("Toyota Innova", "MP8796", 6, 6, true,CarType.SUV);
+        Car vehicle12 = new Car("Toyota Innova", "MP8796",  6, true,CarType.SUV);
         newDriver12.setDriveableVehicleType(VehicleType.CAR);
         newDriver12.setAssociatedVehicle(vehicle12);
         Driver newDriver22 = new Driver("Rambo", 30, "RamboRomeo12","TheRambo&@35".toCharArray(), StationPoint.GUDUVANCHERY, 7, IdGenerator.generateDriverId(StationPoint.GUDUVANCHERY));

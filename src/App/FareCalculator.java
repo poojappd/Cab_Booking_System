@@ -4,14 +4,14 @@ class FareCalculator{
     private static final double miniRatePerKm = 16.15;
     private static final double sedanRatePerKm = 18.33;
     private static final double suvRatePerKm = 20.76;
-    private static final double autoRatePerKm =  12.6;
-    private static final double bikeRatePerKm = 3.4;
+    private static final double autoRatePerKm =  AutoRickshaw.getAutoRickshawBaseFare();
+    private static final double bikeRatePerKm = Bike.getBikeRatePerKm();
 
     private static final double miniBaseFare = 57;
     private static final double sedanBaseFare = 62.58;
     private static final double suvBaseFare = 65.7;
-    private static final double autoBaseFare = 26.25;
-    private static final double bikeBaseFare = 17;
+    private static final double autoBaseFare = AutoRickshaw.getAutoRatePerKm();
+    private static final double bikeBaseFare = Bike.getBikeBaseFare();
 
     private static double calculateAutoFare(double km){
         return (autoBaseFare) + (autoRatePerKm * km);

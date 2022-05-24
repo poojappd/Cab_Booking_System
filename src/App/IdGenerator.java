@@ -22,7 +22,7 @@ public class IdGenerator {
         return otp;
     }
 
-    static String generateBookingId(Booking booking){
+    static String generateBookingId(BookingHistory bookingHistory){
         return UUID.randomUUID().toString();
     }
 }

@@ -6,9 +6,9 @@ public class Car extends Vehicle{
     private boolean wifiPresent;
     private int numberOfSeats;
 
-    public Car(String vehicleName, String numberPlate, int numberOfSeats, int maxOccupants,
+    public Car(String vehicleName, String numberPlate, int maxOccupants,
         boolean airConditionerPresent, CarType carType){
-        super(vehicleName, VehicleType.CAR, numberPlate, numberOfSeats, numberOfSeats);
+        super(vehicleName, VehicleType.CAR, numberPlate, maxOccupants);
         this.airConditionerPresent = airConditionerPresent;
         this.carType = carType;
 

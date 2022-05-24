@@ -1,23 +1,25 @@
 package App;
 
 public class Bike extends Vehicle{
-    private final int maxOccupants = 1;
-    private final int numberOfSeats = 1;
-    private final float timeDurationReductionRate = 0.15f;
-    private final float BikeRate = 0.25f;
+    private  static final int maxOccupants = 1;
+    private static final int numberOfSeats = 1;
+    private static final float bikeSpeedPerKmInMinutes = 2.6f;
+    private static final double bikeRatePerKm = 3.4;
+    private static final double bikeBaseFare = 17;
 
     public Bike(String vehicleName, String numberPlate){
-        super(vehicleName, VehicleType.BIKE, numberPlate, 1, 1);
-    }
-    public int getMaxOccupants() {
-        return maxOccupants;
+        super(vehicleName, VehicleType.BIKE, numberPlate, maxOccupants);
     }
 
-    public float getTimeDurationReductionRate() {
-        return timeDurationReductionRate;
+    static double getBikeRatePerKm() {
+        return bikeRatePerKm;
     }
 
-    public float getBikeRate() {
-        return BikeRate;
+    static double getBikeBaseFare() {
+        return bikeBaseFare;
+    }
+
+    static float getBikeSpeedPerKmInMinutes() {
+        return bikeSpeedPerKmInMinutes;
     }
 }

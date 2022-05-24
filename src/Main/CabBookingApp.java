@@ -98,22 +98,22 @@ public class CabBookingApp {//change name, common to all users
                         VehicleType driverVehicleType = VehicleType.CAR;
                         System.out.println("Enter the number of seats in your car\nNote: valid values are from 3 to 6" +
                                 "excluding driver seat");
-                        int numberOfSeats = UserInputGetter.getInputFromRange(4,6);
+                        int maxOccupants = UserInputGetter.getInputFromRange(4,6);
                         System.out.println("Does the air conditioner work in your car?\n1.Yes\n2.No");
                         int option = UserInputGetter.getMenuChoiceInput(2);
                         boolean airConditionerPresent;
                         airConditionerPresent = option == 1;
                         CarType carType;
-                        if(numberOfSeats ==3){
+                        if(maxOccupants ==3){
                             carType = CarType.MINI;
                         }
-                        else if(numberOfSeats == 4){
+                        else if(maxOccupants == 4){
                             carType = CarType.SEDAN;
                         }
                         else {
                             carType = CarType.SUV;
                         }
-                        Car driverCar = new Car(vehicleName, plateNumber, numberOfSeats, numberOfSeats, airConditionerPresent,carType);
+                        Car driverCar = new Car(vehicleName, plateNumber, maxOccupants, airConditionerPresent,carType);
                         driverCar.setVehicleDriverId(driverId);
                         newDriver.setAssociatedVehicle(driverCar);
 
@@ -153,7 +153,7 @@ public class CabBookingApp {//change name, common to all users
                     2. Schedule a cab ride
                     3. Rent a cab
                     4. Share a cab with others (Discount on Fare!)
-                    5. View Booking History
+                    5. View BookingHistory History
                     6. Logout of account
                     """);
             int chosenMenuOption = UserInputGetter.getMenuChoiceInput(6);
@@ -164,7 +164,23 @@ public class CabBookingApp {//change name, common to all users
             }
         }
     }
+    static void RentCab(Passenger passenger){
+        System.out.println("Enter the number of hours for rental service\nValue ranges from 1 to 10");
+        int preferredDuration = UserInputGetter.getMenuChoiceInput(10);
+        RentalServiceProvider newRentalServiceProvider = new RentalServiceProvider(preferredDuration);
+        System.out.println("1. Total package for for Mini: "+ newRentalServiceProvider.getMiniRentalPackagePerHour());
+        System.out.println("2. Total package for Sedan: "+ newRentalServiceProvider.getSedanRentalPackagePerHour());
+        System.out.println("3. Total package for SUV: "+ newRentalServiceProvider.getSuvRentalPackagePerHour());
+        System.out.println("Choose your desired vehicle for rental service\nEnter 4 to cancel");
+        int packageNumber = UserInputGetter.getMenuChoiceInput(4);
+        switch (packageNumber){
+            case 1 -> CabCentralHub.rentCab(CarType.MINI, preferredDuration);
+            case 2 -> CabCentralHub.rentCab(CarType.SEDAN, preferredDuration);
+            case 3 -> CabCentralHub.rentCab(CarType.SUV, preferredDuration);
+        }
 
+
+    }
     static void BookCab(Passenger passenger) {
         System.out.println("""
                 Select your pickup area
@@ -227,13 +243,13 @@ public class CabBookingApp {//change name, common to all users
 
                 if (chosenOption == 1) {
 
-                    System.out.println("Booking Confirmed! \n" +
+                    System.out.println("BookingHistory Confirmed! \n" +
                             "Please note this otp for verification " + tripOtp);
 
-                    Booking newBooking = CabCentralHub.arrangeTrip(passenger.getUserName(), passenger.getFullName(),
+                    BookingHistory newBookingHistory = CabCentralHub.arrangeTrip(passenger.getUserName(), passenger.getFullName(),
                             passengerCurrentLocation, passengerDestinationLocation, tripOtp,
                             driverId, cabCentreStationPoint, bookedVehicleInfo);
-                    passenger.addToBookingHistory(newBooking);
+                    passenger.addToBookingHistory(newBookingHistory);
                 }
         }
 
@@ -241,11 +257,11 @@ public class CabBookingApp {//change name, common to all users
 
 
     static void viewBookingHistory(Passenger passenger){
-        ArrayList<Booking> bookingHistory = passenger.getBookingHistory();
-        System.out.println("---------------------         Booking History         ---------------------\n");
-        for(Booking bookings:bookingHistory){
-            System.out.println("Booking time:     "+bookings.getCabBookedTime());
-            System.out.println("Booking Id:       "+bookings.getBookingId());
+        ArrayList<BookingHistory> bookingHistory = passenger.getBookingHistory();
+        System.out.println("---------------------         BookingHistory History         ---------------------\n");
+        for(BookingHistory bookings:bookingHistory){
+            System.out.println("BookingHistory time:     "+bookings.getCabBookedTime());
+            System.out.println("BookingHistory Id:       "+bookings.getBookingId());
             System.out.println("From :            "+bookings.getFromLocation().getStationPoint()+" - "+ bookings.getFromLocation().getArea()
                     +"\nTo :            "+bookings.getToLocation().getStationPoint()+" - "+ bookings.getToLocation().getArea());
             System.out.println(bookings.getCabBookingStatus());
@@ -297,7 +313,7 @@ public class CabBookingApp {//change name, common to all users
     public static void viewWelcomeScreen(){
         System.out.println("""
                 **********************************************************
-                                  Cab Booking System
+                                  Cab BookingHistory System
                 **********************************************************
                 Choose the following option to continue
                 

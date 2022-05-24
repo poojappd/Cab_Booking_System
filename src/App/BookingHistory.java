@@ -3,7 +3,7 @@ package App;
 import java.time.LocalDateTime;
 
 public
-class Booking {
+class BookingHistory {
     private final String bookingId;
     private final String passengerName;
     private final String driverName;
@@ -15,8 +15,8 @@ class Booking {
     private final CabServiceType cabServiceType;
     private VehicleInfo vehicleInfo;
 
-    public Booking(String passengerName, String driverName,CabServiceType cabServiceType, LocalDateTime cabBookedTime,
-                   Location fromLocation, Location toLocation, VehicleInfo vehicleInfo){
+    public BookingHistory(String passengerName, String driverName, CabServiceType cabServiceType, LocalDateTime cabBookedTime,
+                          Location fromLocation, Location toLocation, VehicleInfo vehicleInfo){
         this.passengerName = passengerName;
         this.driverName = driverName;
         this.cabBookedTime = cabBookedTime;

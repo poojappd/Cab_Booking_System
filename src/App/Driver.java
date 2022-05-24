@@ -1,8 +1,11 @@
 package App;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Driver extends User{
-    private String driverId;
-    private int rideLimitPerDay;
+    private final String driverId;
+    private final int rideLimitPerDay;
     private boolean reachedRideLimit;
     private int currentRideCount;
     private VehicleType driveableVehicleType;//why do we need this wen we cN ssign vehicle directlu
@@ -35,7 +38,7 @@ public class Driver extends User{
     public String getDriverId() {
         return driverId;
     }
-    //in constructor
+
 
     public int getRideLimitPerDay() {
         return rideLimitPerDay;
@@ -98,6 +101,28 @@ public class Driver extends User{
                 System.out.println(otpMatchedMessage);
                 CabCentralHub.updateDriverStatus(this, ActiveStatus.ENGAGED);
                 CabCentralHub.setBookingStatus(this, bookingId, CabBookingStatus.SUCCESS);
+
+                if(associatedVehicle.getVehicleType() == VehicleType.AUTO_RICKSHAW){
+
+                    System.out.println("Ask driver to pause vehicle nearby(waiting charges applied)\n 1.Yes\n 2.No");
+                    int stopValue = UserInputGetter.getMenuChoiceInput(2);
+                    if(stopValue == 1){
+
+                        LocalDateTime waitingStartTime = LocalDateTime.now();
+                        System.out.println("Waiting... Press 1 at any point to resume ride");
+                        int resumeValue = UserInputGetter.getMenuChoiceInput(1);
+                        LocalDateTime waitingEndTime = LocalDateTime.now();
+                        Duration timeDuration = Duration.between(waitingStartTime, waitingEndTime);
+                        float waitingCharges = AutoRickshaw.putWaitingCharges((int) timeDuration.getSeconds());
+                        System.out.println("Waiting charges: Rs. "+waitingCharges);
+
+                    }
+                }
+                else if(associatedVehicle.getVehicleType() == VehicleType.BIKE){
+                    float speed = Bike.getBikeSpeedPerKmInMinutes();
+                    System.out.println("Reached in "+Map.calculateDistance(fromLocation, toLocation) * speed +"minutes");
+                }
+
             }
             else {
                 System.out.println(otpNotMatchedMessage);
@@ -116,6 +141,7 @@ public class Driver extends User{
     void setActiveStatus(CabCentralHub centralHub, boolean isActive){
         this.isActive = isActive;
     }
+
     boolean getActiveStatus(){
         return isActive;
     }

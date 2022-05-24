@@ -8,7 +8,7 @@ public class CabCentralHub {//admin
 
     private static final HashMap<StationPoint, CabCentre> allCabCentres = new HashMap<>();
     private static final CabCentralHub thisCentralHub = new CabCentralHub();
-    private static final HashMap<String, Booking> allPassengerBookingHistory = new HashMap<>();
+    private static final HashMap<String, BookingHistory> allPassengerBookingHistory = new HashMap<>();
 
     static void addCabCentre(Admin admin, CabCentre cabCentre, StationPoint stationPoint){
         allCabCentres.put(stationPoint, cabCentre);
@@ -22,7 +22,7 @@ public class CabCentralHub {//admin
 
     }
 
-    private static CabCentre getNearbyCabCentre(Location fromLocation, Location destination){
+    private static CabCentre getNearbyCabCentre(Location fromLocation){
         StationPoint stationPoint = fromLocation.getStationPoint();
         CabCentre chosenCabCentre = allCabCentres.get(stationPoint);
         if (chosenCabCentre == null) {
@@ -32,7 +32,7 @@ public class CabCentralHub {//admin
     }
     public static ArrayList<Object> searchAvailableVehiclesFromLocation(Location fromLocation, Location destination) {
 
-        CabCentre chosenCabCentre = getNearbyCabCentre(fromLocation, destination);
+        CabCentre chosenCabCentre = getNearbyCabCentre(fromLocation);
         ArrayList<Object> resultList = new ArrayList<>();
         resultList.add(chosenCabCentre.getLocatedStationPoint());
         HashMap<VehicleType, ArrayList<VehicleInfo>> activeVehicles = chosenCabCentre.getAvailableVehicleInfo();
@@ -78,21 +78,31 @@ public class CabCentralHub {//admin
     }
 
 
-    public static Booking arrangeTrip(String userName, String passengerName, Location passengerFromLocation,
-                            Location passengerToLocation, int tripOtp, String driverId, StationPoint cabCentreStationPoint, VehicleInfo vehicleInfo){
+    public static BookingHistory arrangeTrip(String userName, String passengerName, Location passengerFromLocation,
+                                             Location passengerToLocation, int tripOtp, String driverId, StationPoint cabCentreStationPoint, VehicleInfo vehicleInfo){
 
         CabCentre chosenCabCentre = allCabCentres.get(cabCentreStationPoint);
         String chosenDriverName = chosenCabCentre.getDriverNameFromId(driverId);
         LocalDateTime bookingTime = LocalDateTime.now();
-        Booking newBooking = new Booking(passengerName, chosenDriverName,
+        BookingHistory newBookingHistory = new BookingHistory(passengerName, chosenDriverName,
                 CabServiceType.CAB_BOOKING, bookingTime, passengerFromLocation,
                 passengerToLocation, vehicleInfo);
-        allPassengerBookingHistory.put(newBooking.getBookingId(),newBooking);
+        allPassengerBookingHistory.put(newBookingHistory.getBookingId(), newBookingHistory);
 
         chosenCabCentre.arrangeRide(driverId, passengerName, passengerFromLocation,
-                passengerToLocation, tripOtp, newBooking.getBookingId() );
+                passengerToLocation, tripOtp, newBookingHistory.getBookingId() );
 
-        return newBooking;
+        return newBookingHistory;
+
+    }
+
+    public static void arrangeCarPool(){
+
+    }
+
+    public static void rentCab(CarType carType, int preferredDuration){
+
+
 
     }
 
@@ -111,26 +121,13 @@ public class CabCentralHub {//admin
     }
 
     static void setBookingStatus(Driver driver, String bookingId, CabBookingStatus status){
-        Booking pastBooking = allPassengerBookingHistory.get(bookingId);
-        if(pastBooking != null){
-            pastBooking.setCabBookingStatus(status);
+        BookingHistory pastBookingHistory = allPassengerBookingHistory.get(bookingId);
+        if(pastBookingHistory != null){
+            pastBookingHistory.setCabBookingStatus(status);
         }
 
     }
-//    public static void main(String[] args) {
-//        Admin admin = Admin.instantiateOnce("Admin@123");
-//        assert admin != null;
-//        admin.createMap();
-//        admin.initializeCabCentralHub();
-//        Location from = Map.getLocationFromOption(StationPoint.PALLAVARAM,1);
-//        Location to = Map.getLocationFromOption(StationPoint.THAILAVARAM,1);
-//        ArrayList<VehicleInfo> search = CabCentralHub.searchAvailableVehiclesFromLocation(from, to);
-//
-//        for (VehicleInfo vehicleInfo :search){
-//            System.out.println(vehicleInfo.getVehicleType()+" "+vehicleInfo.getModel()+" "+ vehicleInfo.getFare());
-//        }
-//
-//    }
+
 
 
 

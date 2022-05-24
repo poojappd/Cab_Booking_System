@@ -4,20 +4,17 @@ public class Vehicle {
     private String vehicleId;
     private final String vehicleName;
     private final VehicleType vehicleType;
-    private int mileage;
-    private String ownerId;
     private String vehicleDriverId;
     private int fuelLevel;
-    private final int numberOfSeats;
     private final String numberPlate;
     private final int maxOccupants;
 
-    Vehicle(String vehicleName, VehicleType vehicleType, String numberPlate, int numberOfSeats, int maxOccupants) {
+    Vehicle(String vehicleName, VehicleType vehicleType, String numberPlate,  int maxOccupants) {
         this.vehicleName = vehicleName;
         this.vehicleType = vehicleType;
         this.numberPlate = numberPlate;
         this.maxOccupants = maxOccupants;
-        this.numberOfSeats = numberOfSeats;
+
     }
 
     public String getVehicleId() {
@@ -32,19 +29,9 @@ public class Vehicle {
         return vehicleType;
     }
 
-    public int getMileage() {
-        return mileage;
-    }
 
     public String getNumberPlate() {
         return numberPlate;
-    }
-
-    public int getFuelLevel() {
-        return fuelLevel;
-    }
-
-    void setFuelLevel() {
     }
 
     public String getVehicleDriverId() {

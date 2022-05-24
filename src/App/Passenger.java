@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Passenger extends User{
     private Location passengerHomeLocation;
-    private ArrayList <Booking> bookingHistory;
+    private ArrayList <BookingHistory> bookingHistory;
 
     public Passenger(String fullName, int age, String userName, char[] password, Location passengerHomeLocation){
         super(fullName, age, userName, password);
@@ -20,10 +20,10 @@ public class Passenger extends User{
         return passengerHomeLocation;
     }
 
-    public void addToBookingHistory(Booking booking){
-        this.bookingHistory.add(booking);
+    public void addToBookingHistory(BookingHistory bookingHistory){
+        this.bookingHistory.add(bookingHistory);
     }
-    public ArrayList<Booking> getBookingHistory() {
+    public ArrayList<BookingHistory> getBookingHistory() {
         return new ArrayList<>(bookingHistory);    }
 
 }
