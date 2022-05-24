@@ -12,7 +12,7 @@ class Booking {
     private final Location fromLocation;
     private final Location toLocation;
     private CabBookingStatus cabBookingStatus;
-    private CabServiceType cabServiceType;
+    private final CabServiceType cabServiceType;
     private VehicleInfo vehicleInfo;
 
     public Booking(String passengerName, String driverName,CabServiceType cabServiceType, LocalDateTime cabBookedTime,

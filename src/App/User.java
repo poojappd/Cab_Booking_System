@@ -1,11 +1,11 @@
 package App;
 
-public class User{
+abstract public class User{
 
     private String fullName;
     private int age;
     private String userName;
-    private char[] password;
+    private final char[] password;
 
     User(String fullName, int age, String userName, char[] password){
         this.age = age;
