@@ -1,6 +1,6 @@
 package App;
 
-public class EncryptDecrypt {
+public class CipherSystem {
     public static char[] encrypt(String s) {
         //return char[] array of encrypted password
         char[] temp = s.toCharArray();
@@ -16,6 +16,7 @@ public class EncryptDecrypt {
         for (int i = 0; i < s.length; i++) {
             s[i] = (char)((s[i]/10)-1);
         }
+
         return s;
     }
 }

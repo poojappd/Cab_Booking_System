@@ -34,24 +34,29 @@ class FareCalculator{
     }
 
 
-    static double calculateFare(VehicleType vehicleType, String model, double km){
+    static double calculateFare(VehicleType vehicleType, double km, CarType carType){
         double calculatedFare = 0.0;
 
-        if(vehicleType == VehicleType.BIKE){
-            calculatedFare = calculateBikeFare(km);
-        }
-        else if(vehicleType == VehicleType.AUTO_RICKSHAW){
-            calculatedFare = calculateAutoFare(km);
-        }
-        else {
-            switch (model){
-                case "SEDAN" -> { calculatedFare = calculateSEDANFare(km);}
-                case "SUV" -> { calculatedFare = calculateSUVFare(km);}
-                case "MINI" -> { calculatedFare = calculateMiniFare(km);}
+        switch (vehicleType) {
+             case BIKE ->  calculatedFare = calculateBikeFare(km);
+             case AUTO_RICKSHAW -> calculatedFare = calculateAutoFare(km);
+             case CAR-> {
+                switch (carType) {
+                    case SEDAN -> {
+                        calculatedFare = calculateSEDANFare(km);
+                    }
+                    case SUV -> {
+                        calculatedFare = calculateSUVFare(km);
+                    }
+                    case MINI -> {
+                        calculatedFare = calculateMiniFare(km);
+                    }
+
+                }
 
             }
-
         }
+
     return calculatedFare;
     }
 }

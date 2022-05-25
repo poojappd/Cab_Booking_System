@@ -21,6 +21,7 @@ abstract public class User{
     public int getAge(){
         return age;
     }
+
     public String getUserName(){
         return userName;
     }

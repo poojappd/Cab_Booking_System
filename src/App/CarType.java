@@ -5,6 +5,6 @@ public enum CarType{
     SEDAN,
     SUV,
     MINI,
-    VAN
+    NONE
 
 }

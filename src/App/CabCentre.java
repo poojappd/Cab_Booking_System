@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 class CabCentre {
     private final StationPoint locatedStationPoint;
-    private static HashMap<VehicleType, ArrayList<VehicleInfo>> activeVehiclesInfo;
+    private HashMap<VehicleType, ArrayList<VehicleInfo>> activeVehiclesInfo;
     private HashMap<VehicleType, ArrayList<Vehicle>> allAvailableVehicles;
     private HashMap<String, Driver> availableDrivers;
 
@@ -16,6 +16,7 @@ class CabCentre {
     StationPoint getLocatedStationPoint(){
         return locatedStationPoint;
     }
+
     CabCentre(StationPoint locatedStationPoint){
         this.locatedStationPoint = locatedStationPoint;
         setCabCentre();
@@ -26,17 +27,17 @@ class CabCentre {
         newVehicle.setVehicleDriverId(newDriver.getDriverId());
         allAvailableVehicles.get(newVehicle.getVehicleType()).add(newVehicle);
         availableDrivers.put(newDriver.getDriverId(), newDriver);
-        String model;
+        CarType carType;
         if(newVehicle instanceof Car){
-            model = ((Car) newVehicle).getCarType().toString();
+            carType = ((Car) newVehicle).getCarType();
         }
         else {
-            model = newVehicle.getVehicleName();
+            carType = CarType.NONE;
         }
 
         activeVehiclesInfo.get(newVehicle.getVehicleType()).add(
                 new VehicleInfo(newDriver.getDriverId(), newVehicle.getVehicleId(),newVehicle.getVehicleType(),
-                        model, newVehicle.getMaxOccupants(),newDriver.getFullName()));
+                        newVehicle.getVehicleName(), newVehicle.getMaxOccupants(),newDriver.getFullName(), carType));
 
     }
 
@@ -67,6 +68,7 @@ class CabCentre {
     private Driver getDriverFromId(String driverId){
         return availableDrivers.get(driverId);
     }
+
     String getDriverNameFromId(String driverId){
         return availableDrivers.get(driverId).getFullName();
     }
@@ -77,8 +79,8 @@ class CabCentre {
     }
     void arrangeRide(String driverId, String passengerName, Location passengerFromLocation,
                      Location passengerToLocation, int tripOtp, String bookingId ){
-        Driver assignDriver = getDriverFromId(driverId);
-        assignDriver.pickupCustomer(passengerFromLocation, passengerToLocation, tripOtp, bookingId);
+        Driver assignedDriver = getDriverFromId(driverId);
+        assignedDriver.pickupCustomer(passengerFromLocation, passengerToLocation, tripOtp, bookingId);
 
     }
     private void setCabCentre(){

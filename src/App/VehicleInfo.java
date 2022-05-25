@@ -1,7 +1,7 @@
 package App;
 
-enum ActiveStatus{
-    ACTIVE,
+enum AvailabilityStatus {
+    AVAILABLE,
     ENGAGED
 }
 public class VehicleInfo {
@@ -10,25 +10,27 @@ public class VehicleInfo {
     private String vehicleId;
     private VehicleType vehicleType;
     private String model;
+    private CarType carType;
     private int maxOccupants;
     private double fare;
-    private ActiveStatus activeStatus;
+    private AvailabilityStatus availabilityStatus;
 
-    public VehicleInfo(String driverId, String vehicleId, VehicleType vehicleType, String model, int maxOccupants, String driverName){
+    VehicleInfo(String driverId, String vehicleId, VehicleType vehicleType, String model, int maxOccupants, String driverName, CarType carType){
         this.driverId = driverId;
         this.vehicleType = vehicleType;
         this.vehicleId = vehicleId;
-        this.activeStatus = ActiveStatus.ACTIVE;
+        this.availabilityStatus = AvailabilityStatus.AVAILABLE;
         this.model = model;
         this.maxOccupants = maxOccupants;
         this.driverName = driverName;
+        this.carType = carType;
     }
-    public ActiveStatus getActiveStatus(){
-        return activeStatus;
+    AvailabilityStatus getActiveStatus(){
+        return availabilityStatus;
     }
 
-    public void setActiveStatus(ActiveStatus activeStatus) {
-        this.activeStatus = activeStatus;
+    void setActiveStatus(AvailabilityStatus availabilityStatus) {
+        this.availabilityStatus = availabilityStatus;
     }
     public String getModel(){
         return model;
@@ -42,14 +44,14 @@ public class VehicleInfo {
         return driverId;
     }
 
-    public int getMaxOccupants() {
+    int getMaxOccupants() {
         return maxOccupants;
     }
 
-    public String getVehicleId() {
+    String getVehicleId() {
         return vehicleId;
     }
-    public void setFare(double fare){
+    void setFare(double fare){
         this.fare = fare;
     }
 
@@ -61,4 +63,7 @@ public class VehicleInfo {
         return driverName;
     }
 
+    CarType getCarType() {
+        return carType;
+    }
 }

@@ -1,12 +1,12 @@
-package App;
+package Main;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class UserInputGetter {
+public class UserInput {
     private static Scanner input = new Scanner(System.in);
 
-    private static int handleIntInputException() {
+    public static int getIntInput() {
         int testValue = -1;
         boolean noError = false;
         while (!noError) {
@@ -25,10 +25,10 @@ public class UserInputGetter {
         int chosenMenuOption;
         boolean conditionNotSatisfied;
         do {
-            chosenMenuOption = handleIntInputException();
+            chosenMenuOption = getIntInput();
             conditionNotSatisfied = (chosenMenuOption < 0 || chosenMenuOption > choiceLimit);
             if (conditionNotSatisfied) {
-                System.out.println("Please enter a valid value");
+                System.out.println("Please enter the right option");
             }
         }
         while(conditionNotSatisfied);
@@ -40,20 +40,18 @@ public class UserInputGetter {
         return input.nextLine();
     }
 
-    public static int getIntInput(){
-        return handleIntInputException();
-    }
+
     public static int getInputFromRange(int lowerLimit, int upperLimit){
         int value =-1;
-        boolean conditionNotSatisfied;
+        boolean isWithinRange;
         do{
-            value = handleIntInputException();
-            conditionNotSatisfied = (value<lowerLimit || value>upperLimit);
-            if(conditionNotSatisfied){
+            value = getIntInput();
+            isWithinRange = (value>=lowerLimit && value<=upperLimit);
+            if(!isWithinRange){
                 System.out.println("Please enter a value within the range!");
             }
         }
-        while (conditionNotSatisfied);
+        while (isWithinRange);
         return value;
     }
 

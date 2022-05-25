@@ -8,9 +8,9 @@ public class Database{
    private static HashMap <String, char[]> userCredentials = new HashMap<>();
                    //driverId
 
-    private void getUser(String userName){}
+
     public static User verifyUser(String userName, char[] password){
-        char[] actualUserPassword = EncryptDecrypt.decrypt(userCredentials.get(userName));
+        char[] actualUserPassword = CipherSystem.decrypt(userCredentials.get(userName));
 
         if(!(userCredentials.get(userName) == null) && Arrays.equals(actualUserPassword, password)){
                 return allUsers.get(userName);

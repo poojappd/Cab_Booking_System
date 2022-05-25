@@ -1,5 +1,7 @@
 package App;
 
+import Main.UserInput;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -80,7 +82,7 @@ public class Driver extends User{
                 Thread.sleep(2000);
             }
             System.out.println("Driver has arrived at your location, please enter the otp: ");
-            int passengerOtp = UserInputGetter.getIntInput();
+            int passengerOtp = UserInput.getIntInput();
             boolean otpMatched = (tripOtp == passengerOtp);
             String otpMatchedMessage = "Otp verified! Enjoy your ride";
             String otpNotMatchedMessage = "Sorry, your otp didn't match!";
@@ -90,7 +92,7 @@ public class Driver extends User{
                     String tryWord = (i==1?" try":" tries");
                     System.out.println("Invalid otp!!!\n" +
                             "Re-enter your otp - "+i+tryWord+"  left");
-                    passengerOtp = UserInputGetter.getIntInput();
+                    passengerOtp = UserInput.getIntInput();
                     if(passengerOtp == tripOtp){
                         otpMatched = true;
                         break;
@@ -99,21 +101,21 @@ public class Driver extends User{
             }
             if(otpMatched){
                 System.out.println(otpMatchedMessage);
-                CabCentralHub.updateDriverStatus(this, ActiveStatus.ENGAGED);
+                CabCentralHub.updateDriverStatus(this, AvailabilityStatus.ENGAGED);
                 CabCentralHub.setBookingStatus(this, bookingId, CabBookingStatus.SUCCESS);
 
                 if(associatedVehicle.getVehicleType() == VehicleType.AUTO_RICKSHAW){
 
                     System.out.println("Ask driver to pause vehicle nearby(waiting charges applied)\n 1.Yes\n 2.No");
-                    int stopValue = UserInputGetter.getMenuChoiceInput(2);
+                    int stopValue = UserInput.getMenuChoiceInput(2);
                     if(stopValue == 1){
 
                         LocalDateTime waitingStartTime = LocalDateTime.now();
                         System.out.println("Waiting... Press 1 at any point to resume ride");
-                        int resumeValue = UserInputGetter.getMenuChoiceInput(1);
+                        int resumeValue = UserInput.getMenuChoiceInput(1);
                         LocalDateTime waitingEndTime = LocalDateTime.now();
                         Duration timeDuration = Duration.between(waitingStartTime, waitingEndTime);
-                        float waitingCharges = AutoRickshaw.putWaitingCharges((int) timeDuration.getSeconds());
+                        float waitingCharges = AutoRickshaw.addWaitingCharges((int) timeDuration.getSeconds());
                         System.out.println("Waiting charges: Rs. "+waitingCharges);
 
                     }

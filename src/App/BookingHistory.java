@@ -24,7 +24,7 @@ class BookingHistory {
         this.toLocation = toLocation;
         this.vehicleInfo = vehicleInfo;
         this.cabServiceType = cabServiceType;
-        this.cabBookingStatus = CabBookingStatus.WAITINGFORCONFIRMATION;
+        this.cabBookingStatus = CabBookingStatus.WAITING_FOR_CONFIRMATION;
         this.bookingId = IdGenerator.generateBookingId(this);
 
     }

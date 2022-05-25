@@ -25,6 +25,7 @@ public class CabCentralHub {//admin
     private static CabCentre getNearbyCabCentre(Location fromLocation){
         StationPoint stationPoint = fromLocation.getStationPoint();
         CabCentre chosenCabCentre = allCabCentres.get(stationPoint);
+
         if (chosenCabCentre == null) {
             chosenCabCentre = allCabCentres.get(Map.getNearestStationPoint(stationPoint, allCabCentres.keySet()));
         }
@@ -59,9 +60,9 @@ public class CabCentralHub {//admin
         for (VehicleType vehicleType : activeVehicles.keySet()) {
 
            for (VehicleInfo vehicleInfo : activeVehicles.get(vehicleType)) {
-               if (vehicleInfo.getActiveStatus() == ActiveStatus.ACTIVE) {
-                   double fare = FareCalculator.calculateFare(vehicleInfo.getVehicleType(), vehicleInfo.getModel(),
-                           Map.calculateDistance(fromLocation, destination));
+               if (vehicleInfo.getActiveStatus() == AvailabilityStatus.AVAILABLE) {
+                   double fare = FareCalculator.calculateFare(vehicleInfo.getVehicleType(),
+                           Map.calculateDistance(fromLocation, destination), vehicleInfo.getCarType());
 
                    System.out.printf("%25d %25s %25s %25s %25s", i, vehicleInfo.getVehicleType(), vehicleInfo.getModel(),
                            vehicleInfo.getMaxOccupants(), fare);
@@ -106,14 +107,14 @@ public class CabCentralHub {//admin
 
     }
 
-    static void updateDriverStatus(Driver driver, ActiveStatus activeStatus){
+    static void updateDriverStatus(Driver driver, AvailabilityStatus availabilityStatus){
         CabCentre driverCabCentre = allCabCentres.get(driver.getDefaultStationPoint());
         HashMap<VehicleType, ArrayList<VehicleInfo>> activeVehiclesInfo = driverCabCentre.getAvailableVehicleInfo();
         activeVehiclesInfo.forEach((k,v) ->
         {
             for (VehicleInfo vehicleInfo: v) {
                 if(vehicleInfo.getDriverId().equals(driver.getDriverId())){
-                    vehicleInfo.setActiveStatus(activeStatus);
+                    vehicleInfo.setActiveStatus(availabilityStatus);
                 }
             }
         });

@@ -5,20 +5,8 @@ import java.util.Scanner;
 public class ValidatingTool {
     static Scanner input = new Scanner(System.in);
 
-    public static String validatePassword(String password) {
-        boolean passwordIsNotValid = true;
-        while (passwordIsNotValid) {
-            if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")) {
-                System.out.println("Please enter a valid password!");
-                password = input.nextLine();
-            }
-            else{
-                passwordIsNotValid = false;
-                System.out.println("Great! Your password is set.");
-
-            }
-        }
-        return password;
+    public static boolean validatePassword(String password) {
+        return password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
 
     }
 
@@ -38,19 +26,8 @@ public class ValidatingTool {
         return false;
     }
 
-    public static String validateNumberPlate(String numberPlate){
-        boolean isNumberPlateValid = false;
-        while (!isNumberPlateValid) {
-            if (!numberPlate.matches("^[A-Za-z]{2}[0-9]{4}\\z")) {
-                System.out.println("Your Number plate is not valid! Please try again");
-                numberPlate = input.nextLine();
-            }
-            else{
-                isNumberPlateValid = true;
-                System.out.println("Vehicle numberplate validation is successfull");
-            }
-        }
-        return numberPlate;
+    public static boolean validateNumberPlate(String numberPlate) {
+        return numberPlate.matches("^[A-Za-z]{2}[0-9]{4}\\z");
     }
 
 }

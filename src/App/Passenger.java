@@ -12,10 +12,6 @@ public class Passenger extends User{
         this.bookingHistory = new ArrayList<>();
     }
 
-    public Location getPassengerHomeLocation(){
-        return passengerHomeLocation;
-    }
-
     public Location getHomeLocation() {
         return passengerHomeLocation;
     }

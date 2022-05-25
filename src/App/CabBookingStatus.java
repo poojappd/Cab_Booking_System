@@ -2,5 +2,5 @@ package App;
 public enum CabBookingStatus{
     SUCCESS,
     CANCELLED,
-    WAITINGFORCONFIRMATION
+    WAITING_FOR_CONFIRMATION
 }

@@ -6,20 +6,20 @@ import java.io.IOException;
 
 public class Admin {
     private static final String adminPassword = "Admin@123";
-    private static Admin onlyAdmin;
+    private static Admin singleAdminInstance;
     private Admin(){}
 
     public static Admin instantiateOnce(String checkAdminPassword){
         if(checkAdminPassword.equals(adminPassword)){
-            if (onlyAdmin == null){
-                onlyAdmin = new Admin();
+            if (singleAdminInstance == null){
+                singleAdminInstance = new Admin();
             }
-            return onlyAdmin;
+            return singleAdminInstance;
         }
         return null;
 
     }
-    public void createMap(){
+    private void createMap(){
         String linesInCSV;
         String toRemove = ",";
         try {
@@ -43,7 +43,7 @@ public class Admin {
             e.printStackTrace();
         }
     }
-    public void initializeCabCentralHub(){
+    private void initializeCabCentralHub(){
         CabCentre cabCentre1 = new CabCentre(StationPoint.ALANDUR);
         Driver newDriver1 = new Driver("Perumal", 35, "peru","peru@35Cabs".toCharArray(), StationPoint.ALANDUR, 5, IdGenerator.generateDriverId(StationPoint.ALANDUR));
         Car vehicle1 = new Car("Maruti Swift", "tn4567", 4, true,CarType.SEDAN);
@@ -98,6 +98,11 @@ public class Admin {
         cabCentre3.addVehicleWithDriver(vehicle32, newDriver32);
         CabCentralHub.addCabCentre(this, cabCentre3, StationPoint.GUDUVANCHERY);
 
+    }
+
+    public void initializeSystem(){
+        createMap();
+        initializeCabCentralHub();
     }
 
 }

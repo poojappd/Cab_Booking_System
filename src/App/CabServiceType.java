@@ -1,11 +1,8 @@
 package App;
 
-import java.time.LocalDateTime;
-
-
 public enum CabServiceType{
     RENTAL,
-    CARPOOL,
+    CAR_POOL,
     CAB_BOOKING,
     SCHEDULE_BOOKING
 
