@@ -11,19 +11,7 @@ public class ValidatingTool {
     }
 
     public static boolean validateUserAge(int age){
-        if(age>=18){
-            if(age<=200){
-                return true;
-            }
-            else {
-                System.out.println("Looks like you're too old!");
-            }
-        }
-        else{
-            System.out.println("Sorry kid, you're not allowed to enter into this application");
-        }
-
-        return false;
+        return (age >= 18 && age <= 200);
     }
 
     public static boolean validateNumberPlate(String numberPlate) {

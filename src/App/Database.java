@@ -11,6 +11,7 @@ public class Database{
 
     public static User verifyUser(String userName, char[] password){
         char[] actualUserPassword = CipherSystem.decrypt(userCredentials.get(userName));
+        System.out.println(password+" "+actualUserPassword);
 
         if(!(userCredentials.get(userName) == null) && Arrays.equals(actualUserPassword, password)){
                 return allUsers.get(userName);

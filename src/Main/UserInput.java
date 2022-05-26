@@ -51,7 +51,7 @@ public class UserInput {
                 System.out.println("Please enter a value within the range!");
             }
         }
-        while (isWithinRange);
+        while (!isWithinRange);
         return value;
     }
 

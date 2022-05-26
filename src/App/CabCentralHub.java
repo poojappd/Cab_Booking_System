@@ -3,6 +3,7 @@ package App;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class CabCentralHub {//admin
 
@@ -14,13 +15,22 @@ public class CabCentralHub {//admin
         allCabCentres.put(stationPoint, cabCentre);
     }
 
-    static void  addToCabCentre(Vehicle vehicle){}
-    void addToCabCentre(Driver driver, StationPoint driverStationPoint){
+    static public Set<StationPoint> getCabCentreStationPoints(){
+        return allCabCentres.keySet();
+    }
+    public static void addToCabCentre(UserInfo driverAccountInfo, StationPoint driverDefaultStationPoint, int rideLimitPerDay,
+                                      Vehicle associatedVehicle){
+        String driverId = IdGenerator.generateDriverId(driverDefaultStationPoint);
+        Driver newDriver = new Driver(driverAccountInfo.getFullName(), driverAccountInfo.getAge(), driverAccountInfo.getUsername(),
+                    driverAccountInfo.getEncryptedPassword(), driverDefaultStationPoint, rideLimitPerDay, driverId );
+        newDriver.setDriveableVehicleType(associatedVehicle.getVehicleType());
+        newDriver.setAssociatedVehicle(associatedVehicle);
+
+
+        Database.addUser(newDriver, driverAccountInfo.getEncryptedPassword());
 
     }
-    static void addToCabCentre(Driver driver, Vehicle vehicle, StationPoint driverStationPoint){
 
-    }
 
     private static CabCentre getNearbyCabCentre(Location fromLocation){
         StationPoint stationPoint = fromLocation.getStationPoint();
