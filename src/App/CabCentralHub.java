@@ -23,8 +23,10 @@ public class CabCentralHub {//admin
         String driverId = IdGenerator.generateDriverId(driverDefaultStationPoint);
         Driver newDriver = new Driver(driverAccountInfo.getFullName(), driverAccountInfo.getAge(), driverAccountInfo.getUsername(),
                     driverAccountInfo.getEncryptedPassword(), driverDefaultStationPoint, rideLimitPerDay, driverId );
+
         newDriver.setDriveableVehicleType(associatedVehicle.getVehicleType());
         newDriver.setAssociatedVehicle(associatedVehicle);
+        allCabCentres.get(driverDefaultStationPoint).addVehicleWithDriver(associatedVehicle, newDriver);
 
 
         Database.addUser(newDriver, driverAccountInfo.getEncryptedPassword());
