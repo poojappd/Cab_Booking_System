@@ -48,7 +48,7 @@ public class UserInput {
             value = getIntInput();
             isWithinRange = (value>=lowerLimit && value<=upperLimit);
             if(!isWithinRange){
-                System.out.println("Please enter a value within the range!");
+                System.out.println("Please enter a value within the range ("+lowerLimit+" - "+upperLimit+")");
             }
         }
         while (!isWithinRange);

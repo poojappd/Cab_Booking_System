@@ -113,9 +113,26 @@ public class CabCentralHub {//admin
 
     }
 
-    public static void rentCab(CarType carType, int preferredDuration){
+    private static void callScheduledCab(){
+
+    }
+
+    public static void scheduleCab(String userName, String passengerName, Location passengerFromLocation,
+                                   Location passengerToLocation, int tripOtp, String driverId, StationPoint cabCentreStationPoint,
+                                   VehicleInfo vehicleInfo, int hours)
+    {try {
 
 
+        Thread.sleep(hours * 1000);
+        if(){
+            throw new InterruptedException();
+        }
+        arrangeTrip(userName, passengerName, passengerFromLocation,
+                passengerToLocation,  tripOtp, driverId,  cabCentreStationPoint, vehicleInfo);
+    }
+    catch (InterruptedException ie){
+        System.out.println("Schedule cancelled");
+    }
 
     }
 
@@ -139,6 +156,13 @@ public class CabCentralHub {//admin
             pastBookingHistory.setCabBookingStatus(status);
         }
 
+    }
+
+    public void cancelBooking(String bookingId){
+        BookingHistory booking = allPassengerBookingHistory.get(bookingId);
+        if(booking!= null ){
+            booking.setCabBookingStatus(CabBookingStatus.CANCELLED);
+        }
     }
 
 

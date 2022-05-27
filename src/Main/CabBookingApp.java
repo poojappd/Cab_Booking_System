@@ -25,8 +25,7 @@ public class CabBookingApp {//change name, common to all users
         int age = UserInput.getIntInput();
         boolean isOldEnough = ValidatingTool.validateUserAge(age);
         while (!isOldEnough) {
-            System.out.println("Kids under 18 are not allowed to use the application!\n" +
-                    "Please enter a value within 18 - 160");
+            System.out.println("Accepted age values are from 18 - 160");
             age = UserInput.getIntInput();
             isOldEnough = ValidatingTool.validateUserAge(age);
 
@@ -80,12 +79,13 @@ public class CabBookingApp {//change name, common to all users
             UserInfo driverUserAccountInfo = getUserInfo();
             System.out.println("In which of these areas would you like to work at?\n");
             int i = 1;
-
-            for (StationPoint stationPoint : CabCentralHub.getCabCentreStationPoints()) {
+            ArrayList<StationPoint> allCabCentreStationPoints = new ArrayList<>(CabCentralHub.getCabCentreStationPoints());
+            for (StationPoint stationPoint : allCabCentreStationPoints ) {
                 System.out.println(i++ + ". " + stationPoint);
             }
             System.out.println("Enter the option: ");
-            StationPoint defaultStationPoint  = StationPoint.values()[UserInput.getMenuChoiceInput(i-1)];
+            StationPoint defaultStationPoint  =
+                    allCabCentreStationPoints.get(UserInput.getMenuChoiceInput(allCabCentreStationPoints.size()) - 1);
             System.out.println("How many rides can you take in a single day?");
             System.out.println("Enter a value between 5 to 30: ");
             int rideLimitPerDay = UserInput.getInputFromRange(5, 30);
@@ -117,26 +117,37 @@ public class CabBookingApp {//change name, common to all users
                 switch (vehicleTypeOption){
                     case 1 -> {
                         VehicleType driverVehicleType = VehicleType.CAR;
-                        System.out.println("Enter the number of seats in your car\nNote: valid values are from 3 to 6" +
-                                "excluding driver seat");
-                        int maxOccupants = UserInput.getInputFromRange(3,6);
+                        System.out.println("What is your car type? \n" +
+                                "1. Mini (3 passenger seats)\n" +
+                                        "2. Sedan (4 passenger seats)\n" +
+                                        "3. SUV (5 - 6 seats)");
+                        int maxOccupantChoice = UserInput.getMenuChoiceInput(3);
+                        CarType carType = CarType.NONE;
+                        int maxOccupants = -1;
+
+                        switch (maxOccupantChoice){
+                            case 1 -> {
+                                carType = CarType.MINI;
+                                maxOccupants = 3;
+                            }
+
+                            case 2 -> {
+                                carType = CarType.SEDAN;
+                                maxOccupants = 4;
+                            }
+                            case 3 -> {
+                                carType = CarType.SUV;
+                                System.out.println("Enter the number of seats in your SUV");
+                                maxOccupantChoice = UserInput.getInputFromRange(5,6);
+                                maxOccupants = maxOccupantChoice;
+                            }
+                        }
+
                         System.out.println("Do you have wifi enabled in your car?\n1.Yes\n2.No");
                         int option = UserInput.getMenuChoiceInput(2);
-                        boolean wifiPresent;
-                        wifiPresent = option == 1;
-                        CarType carType;
+                        boolean wifiPresent = option == 1;
 
-                        if(maxOccupants ==3){
-                            carType = CarType.MINI;
-                        }
-                        else if(maxOccupants == 4){
-                            carType = CarType.SEDAN;
-                        }
-                        else {
-                            carType = CarType.SUV;
-                        }
-
-                        Car driverCar = new Car(vehicleName, plateNumber, maxOccupants, wifiPresent,carType);
+                        Car driverCar = new Car(vehicleName, plateNumber, maxOccupants, wifiPresent, carType);
                         associatedVehicle = driverCar;
 
 
@@ -186,6 +197,79 @@ public class CabBookingApp {//change name, common to all users
                 case 6 -> logout = true;
             }
         }
+    }
+
+    static void scheduleCab( Passenger passenger){
+        System.out.println("""
+                Select your pickup area
+                 1. From your home
+                 2. Choose from other locations""");
+        int chosenMenuOption = UserInput.getMenuChoiceInput(2);
+        Location passengerCurrentLocation;
+        Location passengerDestinationLocation;
+
+        if (chosenMenuOption == 1){
+            passengerCurrentLocation = passenger.getHomeLocation();
+        }
+        else{
+            System.out.println("Choose your pickup Station");
+            Map.viewBaseLocations();
+            StationPoint passengerCurrentStation = StationPoint.values()[UserInput.getMenuChoiceInput(Map.getBaseLocationCount()) - 1];
+            System.out.println();
+            Map.viewLocationFromBaseLocation(passengerCurrentStation);
+            chosenMenuOption = UserInput.getMenuChoiceInput(Map.getAreaCount(passengerCurrentStation));
+            passengerCurrentLocation = Map.getLocationFromOption(passengerCurrentStation, chosenMenuOption);
+        }
+        System.out.println("""
+                Select your dropping point
+                 1. To your home
+                 2. Choose from other locations""");
+        chosenMenuOption = UserInput.getMenuChoiceInput(2);
+
+        if(chosenMenuOption == 1){
+            passengerDestinationLocation = passenger.getHomeLocation();
+        }
+        else {
+
+            System.out.println("Select your destination area");
+            Map.viewBaseLocations();
+            StationPoint passengerDestinationStation = StationPoint.values()[UserInput.getMenuChoiceInput(Map.getBaseLocationCount()) - 1];
+            Map.viewLocationFromBaseLocation(passengerDestinationStation);
+            chosenMenuOption = UserInput.getMenuChoiceInput(Map.getAreaCount(passengerDestinationStation));
+            passengerDestinationLocation = Map.getLocationFromOption(passengerDestinationStation, chosenMenuOption);
+        }
+
+        System.out.println("Searching cabs...");
+        ArrayList<Object> resultList =
+                CabCentralHub.searchAvailableVehiclesFromLocation(passengerCurrentLocation, passengerDestinationLocation);
+        int cancelOption = resultList.size();
+        System.out.println("Choose a vehicle to schedule your ride\n" +
+                "Enter " + cancelOption + " to cancel");
+        chosenMenuOption = UserInput.getMenuChoiceInput(cancelOption);
+
+        if (chosenMenuOption != cancelOption) {
+
+            VehicleInfo bookedVehicleInfo = (VehicleInfo) resultList.get(chosenMenuOption);
+            String driverId = bookedVehicleInfo.getDriverId();
+            StationPoint cabCentreStationPoint = (StationPoint) resultList.get(0);
+            int tripOtp = IdGenerator.generateOtp();
+            System.out.println("Book " + bookedVehicleInfo.getVehicleType() + " - " +
+                    bookedVehicleInfo.getModel() + " for Rs." + bookedVehicleInfo.getFare() + " ?\n" +
+                    "1. Schedule cab\n" +
+                    "2. Cancel");
+            int chosenOption = UserInput.getMenuChoiceInput(2);
+
+            if (chosenOption == 1) {
+
+                System.out.println("Booking Confirmed! \n" +
+                        "Please note this otp for verification " + tripOtp);
+
+                BookingHistory newBookingHistory = CabCentralHub.arrangeTrip(passenger.getUserName(), passenger.getFullName(),
+                        passengerCurrentLocation, passengerDestinationLocation, tripOtp,driverId, cabCentreStationPoint, bookedVehicleInfo);
+                passenger.addToBookingHistory(newBookingHistory);
+            }
+        }
+
     }
 
 
@@ -274,8 +358,7 @@ public class CabBookingApp {//change name, common to all users
                             "Please note this otp for verification " + tripOtp);
 
                     BookingHistory newBookingHistory = CabCentralHub.arrangeTrip(passenger.getUserName(), passenger.getFullName(),
-                            passengerCurrentLocation, passengerDestinationLocation, tripOtp,
-                            driverId, cabCentreStationPoint, bookedVehicleInfo);
+                            passengerCurrentLocation, passengerDestinationLocation, tripOtp,driverId, cabCentreStationPoint, bookedVehicleInfo);
                     passenger.addToBookingHistory(newBookingHistory);
                 }
         }
@@ -320,7 +403,10 @@ public class CabBookingApp {//change name, common to all users
         char [] password = UserInput.getStringInput().toCharArray();
         User user = Database.verifyUser(userName, password);
         while (user == null){
-            System.out.println("\nInvalid username or password!\nPlease re-enter your account credentials");
+            System.out.println("\nInvalid username or password!\nPlease re-enter your account username");
+            userName = UserInput.getStringInput();
+
+            System.out.println("And your password...");
             password = UserInput.getStringInput().toCharArray();
             user = Database.verifyUser(userName, password);
 

@@ -10,12 +10,19 @@ public class Database{
 
 
     public static User verifyUser(String userName, char[] password){
-        char[] actualUserPassword = CipherSystem.decrypt(userCredentials.get(userName));
-        System.out.println(password+" "+actualUserPassword);
+        System.out.println(userName);
+        System.out.println(password);
+        char [] actualUserEncryptedPassword;
+        char[] actualUserPassword;
 
-        if(!(userCredentials.get(userName) == null) && Arrays.equals(actualUserPassword, password)){
-                return allUsers.get(userName);
+        if(allUsers.containsKey(userName)) {
+            actualUserEncryptedPassword = userCredentials.get(userName);
+            actualUserPassword = CipherSystem.decrypt(actualUserEncryptedPassword);
+            if (Arrays.equals(actualUserPassword, password)) {
+                    return allUsers.get(userName);
+                }
             }
+
 
         return null;
     }
