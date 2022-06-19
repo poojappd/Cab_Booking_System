@@ -8,13 +8,18 @@ Base fare for 1st 5 km = 120;
     Rate per km 14.96;
     Base fare for 52.8 for x km?
 
+    ride time charge per min - 0.88
+
+
 * Prime Sedan
     4 seats;
     extra luggage;
-    Maruti Swifrt dzire. Toyota etios, Nissan Sunny;
+    Maruti Swift Dzire. Toyota etios, Nissan Sunny;
     Base fare - 57.4;
     Rate per km = 16.81;
     waiting fee per min = 3;
+
+    ride time charge per min - 0.82
 
 *Prime SUV
     5 - 6 seats
@@ -22,16 +27,24 @@ Base fare for 1st 5 km = 120;
     Toyota Innova, Chevrolet Enjoy, Maruti Ertiga
     Base fare  65.7;
     Rate per km = 20;
+
+    base fare 5 km - 200
+    ride time charge per min - 3
+
 ______________________________________________________________
 * Bike
     1 seat,
     Honda Activa, Hero splendor, Bajaj Avendor etc.
     Rate per km = 3.4;
-    Base fare 17;
+    Base fare - 17;
+    ride time charge per min - 0.9
+
+
 
 ______________________________________________________________
 * Auto
 3 seats,
 Bajaj - RE,
-Rate per km - 12.6
-Base fare - 26.25;
+Rate per km - 14
+Base fare 1.8km - 50;
+waiting per min 0.7
